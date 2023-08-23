@@ -1,7 +1,9 @@
+import AppRoutes from "./AppRoutes"
+
 const App = () => {
   return (
-    <div className="flex min-h-screen w-full justify-center bg-white font-[700]">
-      MODUCK
+    <div className="bg-white flex min-h-screen w-full justify-center font-[700]">
+      <AppRoutes />
     </div>
   )
 }
