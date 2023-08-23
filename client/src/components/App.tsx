@@ -1,7 +1,7 @@
 const App = () => {
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-slate-500">
-      Hello, world
+    <div className="flex min-h-screen w-full justify-center bg-white font-[700]">
+      MODUCK
     </div>
   )
 }
