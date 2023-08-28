@@ -9,7 +9,8 @@ module.exports = {
       'mooduck-blue': '#246A73',
       'mooduck-green': '#E2F4F2',
       'mooduck-purple': '#F3F0F9',
-      'mooduck-orange': '#F6E6DF'
+      'mooduck-orange': '#F6E6DF',
+      'mooduck-gray': '#160F2980'
     },
     extend: {}
   },
