@@ -1,15 +1,10 @@
-import clsx, { ClassValue } from 'clsx'
+import { cn } from '@/services/TailwindMerge'
 import React from 'react'
-import { twMerge } from 'tailwind-merge'
-
-const cn = (...inputs: ClassValue[]) => {
-  return twMerge(clsx(inputs))
-}
 
 interface MyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean
   className?: string
-  type?: "button" | "submit" | "reset" 
+  type?: 'button' | 'submit' | 'reset'
 }
 
 const MyButton: React.FC<MyButtonProps> = ({
@@ -23,7 +18,7 @@ const MyButton: React.FC<MyButtonProps> = ({
     <button
       type={type}
       className={cn(
-        'hover:text-white border-[2px] border-mooduck-black font-semibold uppercase text-mooduck-black hover:cursor-pointer hover:bg-mooduck-black hover:text-mooduck-green',
+        'hover:text-white border-[2px] border-mooduck-black font-semibold uppercase text-mooduck-black hover:cursor-pointer hover:bg-mooduck-black hover:text-mooduck-white hover:border-mooduck-black transition-all ease-in',
         className
       )}
       disabled={disabled}
