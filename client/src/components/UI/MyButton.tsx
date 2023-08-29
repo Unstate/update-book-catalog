@@ -18,7 +18,7 @@ const MyButton: React.FC<MyButtonProps> = ({
     <button
       type={type}
       className={cn(
-        'hover:text-white border-[2px] border-mooduck-black font-semibold uppercase text-mooduck-black hover:cursor-pointer hover:bg-mooduck-black hover:text-mooduck-white hover:border-mooduck-black transition-all ease-in',
+        'hover:text-white border-[1px] border-mooduck-black font-semibold uppercase text-mooduck-black transition-all ease-in hover:cursor-pointer hover:border-mooduck-black hover:bg-mooduck-black hover:text-mooduck-white',
         className
       )}
       disabled={disabled}

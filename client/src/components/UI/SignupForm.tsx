@@ -4,7 +4,7 @@ import { ReactSVG } from 'react-svg'
 import MyButton from './MyButton'
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { login } from '@/store/actionCreators'
+import { login, logout } from '@/store/actionCreators'
 
 interface Values {
   email: string
@@ -34,18 +34,12 @@ const validatePassword = (value: string) => {
 }
 
 const SignupForm = () => {
-  const { user, isAuth } = useAppSelector(store => store.userReducer)
   const dispatch = useAppDispatch()
   const [seePassword, setSeePassword] = React.useState<boolean>(false)
 
   const handleOnClick = () => {
     setSeePassword((prev) => !prev)
   }
-
-  React.useEffect(()=>{
-    console.log(user)
-    console.log(isAuth)
-  },[user])
 
   return (
     <section className="bg-white flex h-full w-full flex-col items-center justify-center gap-y-[50px]">
@@ -59,15 +53,11 @@ const SignupForm = () => {
         }}
         onSubmit={(
           values: Values,
-          { setSubmitting, resetForm }: FormikHelpers<Values>,
+          { setSubmitting, resetForm }: FormikHelpers<Values>
         ) => {
           dispatch(login(values.email, values.password))
           setSubmitting(false)
           resetForm()
-          // setTimeout(() => {
-          //   alert(JSON.stringify(values, null, 2))
-          //   setSubmitting(false)
-          // }, 500)
         }}
       >
         {({ errors, touched, isValidating, values }) => (
@@ -105,11 +95,11 @@ const SignupForm = () => {
             {errors.password && touched.password && (
               <div className="text-mooduck-red">{errors.password}</div>
             )}
-            <p className="hover:cursor-pointer hover:text-mooduck-blue transition-all ease-in">
+            <p className="transition-all ease-in hover:cursor-pointer hover:text-mooduck-blue">
               Забыли пароль?
             </p>
             <div className="flex w-full items-center justify-center">
-              <MyButton type="submit" className="w-[200px] py-4 mt-[22px]">
+              <MyButton type="submit" className="mt-[22px] w-[200px] py-4">
                 Войти
               </MyButton>
             </div>
