@@ -1,5 +1,6 @@
 import { bookAPI } from '@/services/BookService'
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import userReducer from './features/userSlice'
 
 // const rootReducer = combineReducers({
 //   // Редюсеры, (слыйсы RTK которые меняют state в зависимости от action)
@@ -16,7 +17,8 @@ import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/
 
 export const store = configureStore({
     reducer: {
-        [bookAPI.reducerPath]: bookAPI.reducer
+        [bookAPI.reducerPath]: bookAPI.reducer,
+        userReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(bookAPI.middleware)
 })

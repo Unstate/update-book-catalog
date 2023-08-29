@@ -3,6 +3,8 @@ import { email, lock, see, user } from '@/assets'
 import { ReactSVG } from 'react-svg'
 import MyButton from './MyButton'
 import React from 'react'
+import { useAppDispatch } from '@/hooks/redux'
+import { registration } from '@/store/actionCreators'
 
 interface Values {
   username: string
@@ -54,6 +56,7 @@ const validateRepeatPassword = (value: string) => {
 }
 
 const RegistrationForm = () => {
+    const dispatch = useAppDispatch()
   const [seePassword, setSeePassword] = React.useState<boolean>(false)
   const [seeRepeatassword, setSeeRepeatassword] = React.useState<boolean>(false)
 
@@ -79,12 +82,14 @@ const RegistrationForm = () => {
         }}
         onSubmit={(
           values: Values,
-          { setSubmitting }: FormikHelpers<Values>
+          { setSubmitting, resetForm }: FormikHelpers<Values>
         ) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            setSubmitting(false)
-          }, 500)
+          dispatch(registration(values.email, values.username, values.password))
+          resetForm()
+          // setTimeout(() => {
+          //   alert(JSON.stringify(values, null, 2))
+          //   setSubmitting(false)
+          // }, 500)
         }}
       >
         {({ errors, touched, isValidating, values }) => (

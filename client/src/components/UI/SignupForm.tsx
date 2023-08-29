@@ -3,6 +3,8 @@ import { email, lock, see } from '@/assets'
 import { ReactSVG } from 'react-svg'
 import MyButton from './MyButton'
 import React from 'react'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { login } from '@/store/actionCreators'
 
 interface Values {
   email: string
@@ -32,11 +34,18 @@ const validatePassword = (value: string) => {
 }
 
 const SignupForm = () => {
+  const { user, isAuth } = useAppSelector(store => store.userReducer)
+  const dispatch = useAppDispatch()
   const [seePassword, setSeePassword] = React.useState<boolean>(false)
 
   const handleOnClick = () => {
     setSeePassword((prev) => !prev)
   }
+
+  React.useEffect(()=>{
+    console.log(user)
+    console.log(isAuth)
+  },[user])
 
   return (
     <section className="bg-white flex h-full w-full flex-col items-center justify-center gap-y-[50px]">
@@ -50,15 +59,18 @@ const SignupForm = () => {
         }}
         onSubmit={(
           values: Values,
-          { setSubmitting }: FormikHelpers<Values>
+          { setSubmitting, resetForm }: FormikHelpers<Values>,
         ) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            setSubmitting(false)
-          }, 500)
+          dispatch(login(values.email, values.password))
+          setSubmitting(false)
+          resetForm()
+          // setTimeout(() => {
+          //   alert(JSON.stringify(values, null, 2))
+          //   setSubmitting(false)
+          // }, 500)
         }}
       >
-        {({ errors, touched, isValidating }) => (
+        {({ errors, touched, isValidating, values }) => (
           <Form className="flex flex-col items-start justify-center gap-y-[28px] text-lg">
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
               <img src={email} />
@@ -79,12 +91,11 @@ const SignupForm = () => {
               <Field
                 id="password"
                 name="password"
-                placeholder="1231235"
+                placeholder="strongPsW2#"
                 type={seePassword ? 'text' : 'password'}
                 validate={validatePassword}
                 className=" w-full"
               />
-              {/* <img src={see} className=' hover:cursor-pointer fill-current hover:text-red-500'/> */}
               <ReactSVG
                 src={see}
                 className="hover:cursor-pointer"
@@ -98,7 +109,6 @@ const SignupForm = () => {
               Забыли пароль?
             </p>
             <div className="flex w-full items-center justify-center">
-              {/* <button type="submit">Submit</button> */}
               <MyButton type="submit" className="w-[200px] py-4 mt-[22px]">
                 Войти
               </MyButton>
