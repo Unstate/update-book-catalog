@@ -1,3 +1,4 @@
+import { useAppSelector } from '@/hooks/redux'
 import {
   BookPage,
   BooksPage,
@@ -6,19 +7,21 @@ import {
   UserPage
 } from '@/pages'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import ScrollButton from './ScrollButton'
 
 const AppRoutes = () => {
-  const token = localStorage.getItem('token');
+  const {isAuth} = useAppSelector(store => store.userReducer)
   return (
     <>
       <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
-          <Route path="/booksPage" element={token ? <BooksPage /> : <LoginPage />} />
-          <Route path="/book/:id" element={token ? <BookPage /> : <LoginPage />} />
-          <Route path="/user/:id" element={token ? <UserPage /> : <LoginPage />} />
+          <Route path="/booksPage" element={isAuth ? <BooksPage /> : <LoginPage />} />
+          <Route path="/book/:id" element={isAuth ? <BookPage /> : <LoginPage />} />
+          <Route path="/user/:id" element={isAuth ? <UserPage /> : <LoginPage />} />
           <Route path="/*" element={<Navigate to="/" replace />}></Route>
       </Routes>
+      <ScrollButton />
     </>
   )
 }

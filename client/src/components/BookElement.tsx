@@ -3,6 +3,7 @@ import React from 'react'
 import { coverMiddle } from '@/assets'
 import { correctViewOfAuthors } from '@/services/TailwindMerge'
 import { MyButton } from './UI'
+import { Link } from 'react-router-dom'
 
 export interface BookElementProps {
   author: string[]
@@ -26,21 +27,31 @@ const BookElement: React.FC<BookElementProps> = ({
   publisher
 }) => {
   return (
-    <div className="w-[200px] flex flex-col gap-y-5">
-      <img
-        className='w-full h-[306px]'
-        src={img.mediumFingernail}
-        alt="Картинка не прогрузилась"
-        onError={({ currentTarget }) => {
-          currentTarget.onerror = null
-          currentTarget.src = coverMiddle
-        }}
-      />
-      <div className='w-full flex flex-col gap-x-[10px]'>
-        <p className='text-mooduck-black text-base whitespace-nowrap overflow-hidden text-ellipsis'>{title}</p>
-        <p className='text-mooduck-gray text-base whitespace-nowrap overflow-hidden text-ellipsis'>{correctViewOfAuthors(author)}</p>
+    <div className="flex w-[200px] flex-col gap-y-5">
+      <Link to={`/book/${id}`}>
+        <img
+          className="h-[306px] w-full"
+          src={img.mediumFingernail}
+          alt="Картинка не прогрузилась"
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null
+            currentTarget.src = coverMiddle
+          }}
+        />
+      </Link>
+      <div className="flex w-full flex-col gap-x-[10px]">
+        <Link to={`/book/${id}`}>
+          <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-black">
+            {title}
+          </p>
+        </Link>
+        <Link to={`/book/${id}`}>
+          <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-gray">
+            {correctViewOfAuthors(author)}
+          </p>
+        </Link>
       </div>
-      <MyButton className='w-full py-[10px]'>хочу почитать</MyButton>
+      <MyButton className="w-full py-[10px]">хочу почитать</MyButton>
     </div>
   )
 }

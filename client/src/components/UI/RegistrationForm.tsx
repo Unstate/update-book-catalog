@@ -69,7 +69,7 @@ const RegistrationForm = () => {
   }
 
   return (
-    <section className="bg-white flex h-full w-full flex-col items-center justify-center gap-y-[50px]">
+    <section className="bg-mooduck-white flex h-full w-full flex-col items-center justify-center gap-y-[50px]">
       <h1 className="text-center text-4xl font-bold uppercase text-mooduck-black">
         Регистрация
       </h1>
