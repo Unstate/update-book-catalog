@@ -11,7 +11,8 @@ export const login = (email: string, password: string) => async (dispatch: AppDi
         localStorage.setItem('token', response.data.accessToken)
         dispatch(userSlice.actions.setAuth(true))
         dispatch(userSlice.actions.setUser(response.data.user))
-        console.log(response.data)
+        dispatch(userSlice.actions.userFetchingSucces(false))
+        // console.log(response.data)
     } catch (error: any) {
         dispatch(userSlice.actions.setError(error.response?.data?.message))
         console.log(error?.response?.data?.message)
@@ -24,7 +25,7 @@ export const registration = (email: string, username: string, password: string) 
         localStorage.setItem('token', response.data.accessToken)
         dispatch(userSlice.actions.setAuth(true))
         dispatch(userSlice.actions.setUser(response.data.user))
-        console.log(response.data)
+        // console.log(response.data)
     } catch (error: any) {
         dispatch(userSlice.actions.setError(error.response?.data?.message))
         console.log(error?.response?.data?.message)

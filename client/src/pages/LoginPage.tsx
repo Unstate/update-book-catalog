@@ -1,6 +1,6 @@
 import LogoAndNameOfCompany from '@/components/LogoAndNameOfCompany'
 import { MyButton, SignupForm } from '@/components/UI'
-import { Link } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 
 const LoginPage = () => {
   return (

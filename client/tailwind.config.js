@@ -11,7 +11,8 @@ module.exports = {
       'mooduck-purple': '#F3F0F9',
       'mooduck-orange': '#F6E6DF',
       'mooduck-gray': '#160F2980',
-      'mooduck-white': '#FFFFFF'
+      'mooduck-white': '#FFFFFF',
+      'mooduck-light-gray': '#E8E7EA',
     },
     extend: {}
   },

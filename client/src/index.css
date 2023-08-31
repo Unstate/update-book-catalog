@@ -7,3 +7,20 @@ body {
   font-family: 'Open Sans', sans-serif;
   background-color: #E5E5E5;
 }
+
+::-webkit-scrollbar-track
+{
+    @apply bg-mooduck-light-gray rounded-[10px];
+}
+
+/* скрол полоска */
+::-webkit-scrollbar
+{
+    @apply w-[6px];
+}
+
+/* скрол бар */
+::-webkit-scrollbar-thumb
+{
+    @apply rounded-[10px] bg-mooduck-black w-[6px];
+}

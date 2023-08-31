@@ -10,6 +10,7 @@ interface IUsers {
     // favouriteBooks: IFavoritebooks;
     comments: IComment[];
     error: string;
+    isSuccess: boolean;
     
 }
 
@@ -41,7 +42,8 @@ const initialState: IUsers = {
     //     page: 1,
     // },
     comments: [],
-    error: ''   
+    error: '',
+    isSuccess: false,   
 }
 
 export const userSlice = createSlice({
@@ -53,7 +55,7 @@ export const userSlice = createSlice({
         },
         userFetchingSucces(state, action: PayloadAction<boolean>) {
             state.isLoading = action.payload
-            // state.user = action.payload
+            state.isSuccess = !action.payload
         },
         setUser(state, action: PayloadAction<IUser>) {
             state.user = action.payload

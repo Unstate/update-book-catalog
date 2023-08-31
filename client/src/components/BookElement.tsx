@@ -14,6 +14,7 @@ export interface BookElementProps {
   description: string
   pageCount: number
   publisher: string
+  type: string
 }
 
 const BookElement: React.FC<BookElementProps> = ({
@@ -24,35 +25,103 @@ const BookElement: React.FC<BookElementProps> = ({
   id,
   description,
   pageCount,
-  publisher
+  publisher,
+  type
 }) => {
   return (
-    <div className="flex w-[200px] flex-col gap-y-5">
-      <Link to={`/book/${id}`}>
-        <img
-          className="h-[306px] w-full"
-          src={img.mediumFingernail}
-          alt="Картинка не прогрузилась"
-          onError={({ currentTarget }) => {
-            currentTarget.onerror = null
-            currentTarget.src = coverMiddle
-          }}
-        />
-      </Link>
-      <div className="flex w-full flex-col gap-x-[10px]">
-        <Link to={`/book/${id}`}>
-          <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-black">
-            {title}
-          </p>
-        </Link>
-        <Link to={`/book/${id}`}>
-          <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-gray">
-            {correctViewOfAuthors(author)}
-          </p>
-        </Link>
-      </div>
-      <MyButton className="w-full py-[10px]">хочу почитать</MyButton>
-    </div>
+    <>
+      {type === 'list' ? (
+        <div className="flex w-full gap-x-5">
+          <Link to={`/book/${id}`}>
+            <img
+              className="h-[306px] w-[200px]"
+              src={img.mediumFingernail}
+              alt="Картинка не прогрузилась"
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null
+                currentTarget.src = coverMiddle
+              }}
+            />
+          </Link>
+          <div className="flex w-full flex-col gap-y-[20px]">
+            <div className='flex flex-col gap-y-[10px]'>
+              <Link to={`/book/${id}`}>
+                <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-black">
+                  {title}
+                </p>
+              </Link>
+              <Link to={`/book/${id}`}>
+                <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-gray">
+                  {correctViewOfAuthors(author)}
+                </p>
+              </Link>
+            </div>
+            <Link to={`/book/${id}`}>
+              <p className="h-[148px] 2xl:w-[486px] xl:w-[486px] overflow-hidden">
+                {description}
+              </p>
+            </Link>
+            {/* <p className='text-base text-mooduck-gray lg:hidden'>{publisher} , {pageCount} страницы</p> */}
+            <div className='lg:flex items-end justify-between pt-[12px] hidden'>
+              <p className='text-base text-mooduck-gray'>{publisher} , {pageCount} страницы</p>
+              <MyButton className='w-[180px] py-[10px]'>Хочу почитать</MyButton>
+            </div>
+            {/* <MyButton className='w-full py-[10px] lg:hidden'>Хочу почитать</MyButton> */}
+          </div>
+          {/* <Link to={`/book/${id}`}>
+            <img
+              className="h-[306px] w-full"
+              src={img.mediumFingernail}
+              alt="Картинка не прогрузилась"
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null
+                currentTarget.src = coverMiddle
+              }}
+            />
+          </Link>
+          <div className="flex w-full flex-col gap-x-[10px]">
+            <Link to={`/book/${id}`}>
+              <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-black">
+                {title}
+              </p>
+            </Link>
+            <Link to={`/book/${id}`}>
+              <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-gray">
+                {correctViewOfAuthors(author)}
+              </p>
+            </Link>
+          </div>
+          <MyButton className="w-full py-[10px]">хочу почитать</MyButton> */}
+        </div>
+      ) : (
+        <div className="flex w-[200px] flex-col gap-y-5">
+          <Link to={`/book/${id}`}>
+            <img
+              className="h-[306px] w-full"
+              src={img.mediumFingernail}
+              alt="Картинка не прогрузилась"
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null
+                currentTarget.src = coverMiddle
+              }}
+            />
+          </Link>
+          <div className="flex w-full flex-col gap-x-[10px]">
+            <Link to={`/book/${id}`}>
+              <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-black">
+                {title}
+              </p>
+            </Link>
+            <Link to={`/book/${id}`}>
+              <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-mooduck-gray">
+                {correctViewOfAuthors(author)}
+              </p>
+            </Link>
+          </div>
+          <MyButton className="w-full py-[10px]">хочу почитать</MyButton>
+        </div>
+      )}
+    </>
   )
 }
 

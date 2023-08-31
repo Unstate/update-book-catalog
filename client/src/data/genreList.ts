@@ -1,11 +1,12 @@
 export interface IAuthorsAndGenres {
-  [key: string]: string | boolean
-  //   id: string;
-  //   checked: boolean;
-  //   [key: string]: string ;
+  // [key: string]: string | boolean
+    id: string;
+    checked: boolean;
+    author:string;
+    // [key: string]: string ;
 }
 
-export const authors: IAuthorsAndGenres[] = [
+export const AUTHORS: IAuthorsAndGenres[] = [
   {
     id: 'Сапковский А.',
     checked: false,
@@ -1039,7 +1040,7 @@ export const authors: IAuthorsAndGenres[] = [
   }
 ]
 
-export const genres: IAuthorsAndGenres[] = [
+export const GENRES: IAuthorsAndGenres[] = [
   {
     id: 'Фэнтези',
     checked: false,

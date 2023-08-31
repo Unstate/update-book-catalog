@@ -2,9 +2,10 @@ import { Formik, Form, FormikHelpers, Field } from 'formik'
 import { email, lock, see } from '@/assets'
 import { ReactSVG } from 'react-svg'
 import MyButton from './MyButton'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { login, logout } from '@/store/actionCreators'
+import { useNavigate } from 'react-router-dom'
 
 interface Values {
   email: string
@@ -34,8 +35,14 @@ const validatePassword = (value: string) => {
 }
 
 const SignupForm = () => {
+  const navigate = useNavigate()
+  const { isSuccess } = useAppSelector(store => store.userReducer)
   const dispatch = useAppDispatch()
   const [seePassword, setSeePassword] = React.useState<boolean>(false)
+
+  useEffect(()=>{
+    navigate('/booksPage')
+  },[isSuccess])
 
   const handleOnClick = () => {
     setSeePassword((prev) => !prev)

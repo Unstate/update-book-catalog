@@ -11,8 +11,8 @@ interface IParamsNormalBooks {
 interface IParamsFilterBooks {
   limit: number;
   page: number;
-  genre: string[];
-  author: string[];
+  genre: string[] | string | undefined;
+  author: string[] | string | undefined;
 }
 
 

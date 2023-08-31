@@ -37,6 +37,7 @@ const Header = () => {
         </div>
         <div className="h-[2px] w-full bg-mooduck-gray" />
       </header>
+      {/* HEADER FOR LG AND SMALL */}
       <header
         id="header1"
         className="flex w-full flex-col gap-y-[30px] px-[42px] pt-[21px] lg:hidden xl:hidden 2xl:hidden "

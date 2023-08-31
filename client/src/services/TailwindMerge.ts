@@ -1,3 +1,4 @@
+import { IAuthorsAndGenres } from "@/data/genreList"
 import clsx, { ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -24,3 +25,17 @@ export const checkExtendOfUser = (arr:string[],userId:string):boolean => {
     }
     return false
 }
+
+export const getUniqueObjects = (arr: IAuthorsAndGenres[]) => {
+    let uniqueArr = [];
+    let seen = new Set();
+
+    for (let obj of arr) {
+        let str = JSON.stringify(obj);
+        if (!seen.has(str)) {
+            uniqueArr.push(obj);
+            seen.add(str);
+        }
+    }
+    return uniqueArr;
+};

@@ -22,6 +22,8 @@ const BookPage = () => {
     error: commentsError
   } = useGetCertainBookCommentsQuery(id)
 
+  
+
   return (
     <div className="flex min-h-screen w-[590px] flex-col bg-mooduck-white py-[21px] lg:w-[990px] xl:w-[1400px] 2xl:w-[1400px]">
       <Header />
