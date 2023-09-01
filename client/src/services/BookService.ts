@@ -53,4 +53,4 @@ export const bookAPI = createApi({
   })
 })
 
-export const { useGetAllBooksQuery, useGetSpecifyBooksQuery, useGetCertainBookQuery, useGetCertainBookCommentsQuery } = bookAPI
+export const { useGetAllBooksQuery, useLazyGetSpecifyBooksQuery, useGetCertainBookQuery, useGetCertainBookCommentsQuery } = bookAPI
