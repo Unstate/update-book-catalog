@@ -4,52 +4,44 @@ import { ReactSVG } from 'react-svg'
 import MyButton from './MyButton'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { login, logout } from '@/store/actionCreators'
+import { login } from '@/store/actionCreators'
 import { useNavigate } from 'react-router-dom'
+import Popup from './Popup'
+import { validateEmail, validatePassword } from '@/utils'
 
+//FIXME: Посмотреть куда убрать
 interface Values {
   email: string
   password: string
 }
 
-const validateEmail = (value: string) => {
-  let error
-  if (!value) {
-    error = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = 'Invalid email address'
-  }
-  return error
-}
-
-const validatePassword = (value: string) => {
-  let error
-  if (!value) {
-    error = 'Required'
-  } else if (value.length < 6) {
-    error = 'Password too short! Password must be more than 6 symbols'
-  } else if (value.length > 20) {
-    error = 'Password too big! Password must be less than 20 symbols'
-  }
-  return error
-}
-
 const SignupForm = () => {
+
+
+  //FIXME: Посмотреть куда убрать
   const navigate = useNavigate()
-  const { isSuccess } = useAppSelector(store => store.userReducer)
+  const { isSuccess, error, isLoading } = useAppSelector((store) => store.userReducer)
   const dispatch = useAppDispatch()
   const [seePassword, setSeePassword] = React.useState<boolean>(false)
+  const [message, setMessage] = React.useState<string | null>(error)
 
-  useEffect(()=>{
+  useEffect(() => {
     navigate('/booksPage')
-  },[isSuccess])
+  }, [isSuccess])
 
   const handleOnClick = () => {
     setSeePassword((prev) => !prev)
   }
 
+  useEffect(()=>{
+    if (error.length) {
+      setMessage(error)
+    }
+  },[error])
+
+
   return (
-    <section className="bg-mooduck-white flex h-full w-full flex-col items-center justify-center gap-y-[50px]">
+    <section className="flex h-full w-full flex-col items-center justify-center gap-y-[50px] bg-mooduck-white">
       <h1 className="text-center text-4xl font-bold uppercase text-mooduck-black">
         Вход
       </h1>
@@ -67,7 +59,7 @@ const SignupForm = () => {
           resetForm()
         }}
       >
-        {({ errors, touched, isValidating, values }) => (
+        {({ errors, touched }) => (
           <Form className="flex flex-col items-start justify-center gap-y-[28px] text-lg">
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
               <img src={email} />
@@ -77,8 +69,7 @@ const SignupForm = () => {
                 placeholder="example@mail.ru"
                 type="email"
                 validate={validateEmail}
-                className=" w-full"
-              />
+                className=" w-full" />
             </div>
             {errors.email && touched.email && (
               <div className="text-mooduck-red">{errors.email}</div>
@@ -91,13 +82,11 @@ const SignupForm = () => {
                 placeholder="strongPsW2#"
                 type={seePassword ? 'text' : 'password'}
                 validate={validatePassword}
-                className=" w-full"
-              />
+                className=" w-full" />
               <ReactSVG
                 src={see}
                 className="hover:cursor-pointer"
-                onClick={handleOnClick}
-              />
+                onClick={handleOnClick} />
             </div>
             {errors.password && touched.password && (
               <div className="text-mooduck-red">{errors.password}</div>
@@ -106,13 +95,14 @@ const SignupForm = () => {
               Забыли пароль?
             </p>
             <div className="flex w-full items-center justify-center">
-              <MyButton type="submit" className="mt-[22px] w-[200px] py-4">
+              <MyButton type="submit" className="mt-[22px] w-[200px] py-4" disabled={isLoading ? true : false}>
                 Войти
               </MyButton>
             </div>
           </Form>
         )}
       </Formik>
+      {message && <Popup handleOnClose={setMessage} message={message} />}
     </section>
   )
 }

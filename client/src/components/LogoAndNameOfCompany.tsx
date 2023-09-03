@@ -1,5 +1,5 @@
 import { logotype } from '@/assets'
-import { cn } from '@/services/TailwindMerge'
+import { cn } from '@/utils'
 
 interface LogoAndNameOfCompanyProps {
   className: string

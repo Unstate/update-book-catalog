@@ -1,9 +1,9 @@
 import { IImages } from '@/models/IBook'
 import React from 'react'
 import { coverMiddle } from '@/assets'
-import { correctViewOfAuthors } from '@/services/TailwindMerge'
 import { MyButton } from './UI'
 import { Link } from 'react-router-dom'
+import { correctViewOfAuthors } from '@/utils'
 
 export interface BookElementProps {
   author: string[]

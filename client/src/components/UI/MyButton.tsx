@@ -1,4 +1,4 @@
-import { cn } from '@/services/TailwindMerge'
+import { cn } from '@/utils'
 import React from 'react'
 
 interface MyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {

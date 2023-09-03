@@ -1,9 +1,8 @@
 import { FC } from 'react';
-import { getPaginationItems } from './getPaginationItems'
 import PageLink from './PageLink';
 import { leftArrow, rightArrow } from '@/assets';
 import { scrollToTop } from '@/components/ScrollButton';
-// import { scrollToTop } from '../ScrollButton';
+import { getPaginationItems } from '@/utils/getPaginationItems';
 
 type Props = {
     currentPage: number;

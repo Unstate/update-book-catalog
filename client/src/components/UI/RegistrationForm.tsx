@@ -5,6 +5,7 @@ import MyButton from './MyButton'
 import React from 'react'
 import { useAppDispatch } from '@/hooks/redux'
 import { registration } from '@/store/actionCreators'
+import { validateEmail, validatePassword, validateUsername } from '@/utils'
 
 interface Values {
   username: string
@@ -13,50 +14,8 @@ interface Values {
   repeatPassword: string
 }
 
-const validateUsername = (value: string) => {
-  let error
-  if (!value) {
-    error = 'Required'
-  }
-  return error
-}
-
-const validateEmail = (value: string) => {
-  let error
-  if (!value) {
-    error = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = 'Invalid email address'
-  }
-  return error
-}
-
-const validatePassword = (value: string) => {
-  let error
-  if (!value) {
-    error = 'Required'
-  } else if (value.length < 6) {
-    error = 'Password too short! Password must be more than 6 symbols'
-  } else if (value.length > 20) {
-    error = 'Password too big! Password must be less than 20 symbols'
-  }
-  return error
-}
-
-const validateRepeatPassword = (value: string) => {
-  let error
-  if (!value) {
-    error = 'Required'
-  } else if (value.length < 6) {
-    error = 'Password too short! Password must be more than 6 symbols'
-  } else if (value.length > 20) {
-    error = 'Password too big! Password must be less than 20 symbols'
-  }
-  return error
-}
-
 const RegistrationForm = () => {
-    const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
   const [seePassword, setSeePassword] = React.useState<boolean>(false)
   const [seeRepeatassword, setSeeRepeatassword] = React.useState<boolean>(false)
 
@@ -69,7 +28,7 @@ const RegistrationForm = () => {
   }
 
   return (
-    <section className="bg-mooduck-white flex h-full w-full flex-col items-center justify-center gap-y-[50px]">
+    <section className="flex h-full w-full flex-col items-center justify-center gap-y-[50px] bg-mooduck-white">
       <h1 className="text-center text-4xl font-bold uppercase text-mooduck-black">
         Регистрация
       </h1>
@@ -80,16 +39,9 @@ const RegistrationForm = () => {
           password: '',
           repeatPassword: ''
         }}
-        onSubmit={(
-          values: Values,
-          { setSubmitting, resetForm }: FormikHelpers<Values>
-        ) => {
+        onSubmit={(values: Values, { resetForm }: FormikHelpers<Values>) => {
           dispatch(registration(values.email, values.username, values.password))
           resetForm()
-          // setTimeout(() => {
-          //   alert(JSON.stringify(values, null, 2))
-          //   setSubmitting(false)
-          // }, 500)
         }}
       >
         {({ errors, touched, isValidating, values }) => (
@@ -161,8 +113,7 @@ const RegistrationForm = () => {
               <div className="text-mooduck-red">Пароли не совпадают</div>
             ) : null}
             <div className="flex w-full items-center justify-center">
-              {/* <button type="submit">Submit</button> */}
-              <MyButton type="submit" className="w-[292px] py-4 mt-[22px]">
+              <MyButton type="submit" className="mt-[22px] w-[292px] py-4">
                 зарегестрироваться
               </MyButton>
             </div>

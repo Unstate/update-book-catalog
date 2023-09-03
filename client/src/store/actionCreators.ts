@@ -12,10 +12,11 @@ export const login = (email: string, password: string) => async (dispatch: AppDi
         dispatch(userSlice.actions.setAuth(true))
         dispatch(userSlice.actions.setUser(response.data.user))
         dispatch(userSlice.actions.userFetchingSucces(false))
+        dispatch(userSlice.actions.setIsSuccess(true))
         // console.log(response.data)
     } catch (error: any) {
         dispatch(userSlice.actions.setError(error.response?.data?.message))
-        console.log(error?.response?.data?.message)
+        // console.log(error.response.data?.message)
     }
 }
 

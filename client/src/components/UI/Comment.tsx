@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { like, dislike } from '@/assets'
 import StarRating from './StarRating/StarRating'
-import { checkExtendOfUser } from '@/services/TailwindMerge'
+import { checkExtendOfUser } from '@/utils'
 
 interface CommentProps {
   title: string

@@ -28,6 +28,8 @@ const ModalError = ({ message, onClose }: ErrorProps) => {
 
   const progress = (elapsedTime / HIDE_TIMEOUT) * 100;
 
+  console.log(message)
+
   return (
     <div className='fixed z-10 bottom-[100px] bg-white right-0 border-[2px]
      border-[#160F29] rounded-[10px] w-[700px]'>

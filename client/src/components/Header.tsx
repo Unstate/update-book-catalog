@@ -1,10 +1,13 @@
-import React from 'react'
 import LogoAndNameOfCompany from './LogoAndNameOfCompany'
 import { unknownAvatar, search } from '@/assets'
 import { ReactSVG } from 'react-svg'
 import { Link } from 'react-router-dom'
+import { useAppSelector } from '@/hooks/redux'
 
 const Header = () => {
+
+  const { user } = useAppSelector(store => store.userReducer)
+
   return (
     <>
       <header
@@ -27,7 +30,7 @@ const Header = () => {
                 className="h-[16px] w-[16px] hover:cursor-pointer"
               />
             </div>
-            <Link to={'/'}>
+            <Link to={`/user/${user.id}`}>
               <img
                 src={unknownAvatar}
                 className="h-[40px] w-[40px] hover:cursor-pointer"

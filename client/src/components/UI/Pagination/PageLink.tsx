@@ -1,4 +1,4 @@
-import { cn } from '@/services/TailwindMerge';
+import { cn } from '@/utils';
 import { FC, HTMLProps } from 'react';
 
 type Props = HTMLProps<HTMLAnchorElement> & { active?: boolean };

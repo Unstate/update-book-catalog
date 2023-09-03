@@ -4,11 +4,11 @@ import {
   useGetCertainBookCommentsQuery,
   useGetCertainBookQuery
 } from '@/services/BookService'
-import { correctViewOfAuthors } from '@/services/TailwindMerge'
 import { coverIsMissing } from '@/assets'
 import { useParams } from 'react-router-dom'
 import { Link, animateScroll as scroll } from 'react-scroll'
 import Comment from '@/components/UI/Comment'
+import { correctViewOfAuthors } from '@/utils'
 
 const BookPage = () => {
   const { id } = useParams()
@@ -22,13 +22,12 @@ const BookPage = () => {
     error: commentsError
   } = useGetCertainBookCommentsQuery(id)
 
-  
-
   return (
     <div className="flex min-h-screen w-[590px] flex-col bg-mooduck-white py-[21px] lg:w-[990px] xl:w-[1400px] 2xl:w-[1400px]">
       <Header />
       <main className="min-h-screen w-full flex-col gap-y-[30px] px-[42px] pt-[30px]">
         {isLoading && <Preloader></Preloader>}
+        {/* ВЫНЕСТИ В ОТДЕЛЬНЫЙ КОМПОНЕНТ */}
         <p className="text-base text-mooduck-gray">Все книги / {data?.title}</p>
         <section className="flex w-full gap-x-[59px] py-[30px]">
           <img
@@ -113,7 +112,9 @@ const BookPage = () => {
             <MyButton className="w-[540px] py-[15px]">Хочу почитать</MyButton>
           </div>
         </section>
+        {/* ВЫНЕСТИ В ОТДЕЛЬНЫЙ КОМПОНЕНТ */}
         <div className="h-[2px] w-full bg-mooduck-gray" />
+        {/* ВЫНЕСТИ В ОТДЕЛЬНЫЙ КОМПОНЕНТ */}
         <section
           id="section1"
           className="flex w-full flex-col gap-y-[30px] py-[30px]"
@@ -186,16 +187,17 @@ const BookPage = () => {
             </div>
           </div>
         </section>
+        {/* ВЫНЕСТИ В ОТДЕЛЬНЫЙ КОМПОНЕНТ */}
         <div className="h-[2px] w-full bg-mooduck-gray" />
         {/*Сделать компонент Comments*/}
-        <section className="w-full py-[30px] flex flex-col gap-y-5">
+        <section className="flex w-full flex-col gap-y-5 py-[30px]">
           <div className="flex items-center justify-between">
             <p className="text-[25px] font-bold text-mooduck-black">
               Комментарии
             </p>
             <MyButton className="w-[250px] py-4">Написать комментарий</MyButton>
           </div>
-          <div className='flex flex-col gap-y-5'>
+          <div className="flex flex-col gap-y-5">
             {comments?.map((comment) => (
               <Comment
                 key={comment._id}
@@ -210,6 +212,7 @@ const BookPage = () => {
             ))}
           </div>
         </section>
+        {/* ВЫНЕСТИ В COMMENTS */}
       </main>
       <Footer />
     </div>
