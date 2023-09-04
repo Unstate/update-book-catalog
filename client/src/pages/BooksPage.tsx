@@ -1,5 +1,7 @@
-import { BookElement, Footer, Header } from '@/components'
-import Filter from '@/components/Filter'
+import { Footer, Header } from '@/components'
+import BookElementList from '@/components/BookElementList'
+import BookElementTiles from '@/components/BookElementTiles'
+import FilterContainer from '@/components/Filter/FilterContainer'
 import { Pagination, Preloader } from '@/components/UI'
 import { AUTHORS, GENRES, IAuthorsAndGenres } from '@/data/genreList'
 import { IBook } from '@/models/IBook'
@@ -11,6 +13,7 @@ const BooksPage = () => {
   const [getSpecifyBooks, results] = useLazyGetSpecifyBooksQuery()
   const [page, setPage] = React.useState<number>(1)
   const [list, setList] = React.useState<boolean>(false)
+  const [visable, setVisable] = React.useState<boolean>(false)
   const [value, setValue] = useState<string>('')
   const [authors, setAuthors] = useState<IAuthorsAndGenres[]>(
     getUniqueObjects(AUTHORS)
@@ -103,8 +106,7 @@ const BooksPage = () => {
       {results.error && <h1>Ошибка</h1>}
       <Header />
       <div className="flex flex-col gap-x-[34px] gap-y-[30px] px-[42px] pt-[30px] xl:flex-row xl:gap-y-0 2xl:flex-row 2xl:gap-y-0">
-        {/* Вынести в FilterContainer. В нем прописать всю логику и сделать обычный Filter, там еще сделать FilterMobile */}
-        <Filter
+        <FilterContainer
           genres={genres}
           searchedAuthors={searchedAuthors}
           handleOnClickAuthor={handleOnClickAuthor}
@@ -121,17 +123,14 @@ const BooksPage = () => {
         />
         {results.isLoading && <Preloader></Preloader>}
         {results.isSuccess && (
-          // Вынести в отдельный компонент
           <div className="flex w-full flex-col items-center">
             {list ? (
               <main className="flex min-h-screen w-full flex-col flex-wrap gap-x-[105px] gap-y-[30px] lg:gap-x-[34px] xl:gap-x-[25px] 2xl:gap-x-[34px]">
                 {results.data.books.map((book: IBook) => (
-                  <BookElement
-                    type="list"
+                  <BookElementList
                     key={book._id}
                     author={book.authors}
                     title={book.title}
-                    genres={book.genres}
                     img={book.img}
                     id={book._id}
                     description={book.description}
@@ -143,17 +142,12 @@ const BooksPage = () => {
             ) : (
               <main className="flex min-h-screen w-full flex-wrap gap-x-[105px] gap-y-[30px] lg:gap-x-[34px] xl:gap-x-[25px] 2xl:gap-x-[33px]">
                 {results.data.books.map((book: IBook) => (
-                  <BookElement
-                    type="tiles"
+                  <BookElementTiles
                     key={book._id}
                     author={book.authors}
                     title={book.title}
-                    genres={book.genres}
                     img={book.img}
                     id={book._id}
-                    description={book.description}
-                    pageCount={book.pageCount}
-                    publisher={book.publisher}
                   />
                 ))}
               </main>

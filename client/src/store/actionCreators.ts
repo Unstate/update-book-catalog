@@ -26,6 +26,7 @@ export const registration = (email: string, username: string, password: string) 
         localStorage.setItem('token', response.data.accessToken)
         dispatch(userSlice.actions.setAuth(true))
         dispatch(userSlice.actions.setUser(response.data.user))
+        dispatch(userSlice.actions.setIsSuccess(true))
         // console.log(response.data)
     } catch (error: any) {
         dispatch(userSlice.actions.setError(error.response?.data?.message))

@@ -2,39 +2,52 @@ import { BookElement, Footer, Header } from '@/components'
 import { MyButton } from '@/components/UI'
 import { ReactComponent as Barcode } from '../assets/barcode.svg'
 import { ReactComponent as UnknownAvatar } from '../assets/goose.svg'
+import { ReactComponent as DuckFootprints } from '../assets/duckFootprints.svg'
 import {
   useChangeUserEmailMutation,
   useChangeUserUsernameMutation,
-  useGetUserQuery,
-  useLazyGetUserFavoriteBooksQuery
+  useCheckUserPasswordMutation,
+  useGetUserCommentsQuery,
+  useGetUserFavoriteBooksQuery,
+  useGetUserLogoQuery,
+  useGetUserQuery
 } from '@/services/BookService'
 import { useParams } from 'react-router-dom'
-import { useRef, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import Modal from '@/components/UI/Modal'
 import { ReactComponent as ImageUploader } from '@/assets/imageBeforeHover.svg'
 import { useAppDispatch } from '@/hooks/redux'
 import { logout } from '@/store/actionCreators'
 import { IBook } from '@/models/IBook'
+import BookElementTiles from '@/components/BookElementTiles'
+import Comments from '@/components/Comments'
 
 const UserPage = () => {
-
   const dispatch = useAppDispatch()
   const { id } = useParams()
 
+  //FIXME: Переписать используя кастомные хуки
   const [visableUsername, setVisableUsername] = useState<boolean>(false)
   const [username, setUsername] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [checkPassword, setCheckPassword] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const [visableEmail, setVisableEmail] = useState<boolean>(false)
   const [visablePhoto, setVisablePhoto] = useState<boolean>(false)
-  
-  
+  const [visableLogout, setVisableLogout] = useState<boolean>(false)
+  const [visableCheckPassword, setVisableCheckPassword] =
+    useState<boolean>(false)
+  const [visablePassword, setVisablePassword] = useState<boolean>(false)
 
+  //FIXME: Использовать все пееменные
+  const { data: logoUser } = useGetUserLogoQuery(id)
   const {
     data: userData,
     isError: userIsError,
     isLoading: userIsLoading,
     error: userUploadError
   } = useGetUserQuery(id)
-  const [getUserFavoriteBooks, results] = useLazyGetUserFavoriteBooksQuery()
+  const { data } = useGetUserFavoriteBooksQuery({ id: id, limit: 10000 })
   const [
     changeUsername,
     {
@@ -48,21 +61,38 @@ const UserPage = () => {
     {
       isError: changeEmailIsError,
       isLoading: changeEmailIsLoading,
-      isSuccess: changeEmailIsSuccess,
+      isSuccess: changeEmailIsSuccess
     }
   ] = useChangeUserEmailMutation()
 
-  const handleChangeUsername = async(id:string | undefined, username:string) => {
-    await changeUsername({id, username})
-    handleCloseModal(setVisableUsername,setUsername)
+  const [
+    checkUserPassword,
+    {
+      error: checkPasswordError,
+      isSuccess: checkUserPasswordIsSuccess,
+      isLoading: checkUserPasswordIsLoading,
+      status,
+      data: checkPasswordData
+    }
+  ] = useCheckUserPasswordMutation()
+  //FIXME: До сюда
+
+  const { data: userComments } = useGetUserCommentsQuery(id)
+  // console.log(userComments)
+
+  const handleChangeUsername = async (
+    id: string | undefined,
+    username: string
+  ) => {
+    await changeUsername({ id, username })
+    handleCloseModal(setVisableUsername, setUsername)
   }
 
   //FIXME: Переделать типы
-  const handleCloseModal = (closeModal:any, clearModal:any) => {
+  const handleCloseModal = (closeModal: any, clearModal: any) => {
     closeModal(false)
     clearModal('')
   }
-
 
   // ВЫНЕСТИ КУДА-ТО
   const inputRef = useRef<HTMLInputElement>(null)
@@ -88,9 +118,6 @@ const UserPage = () => {
     e.preventDefault()
     setFiles(null)
   }
-  // ВЫНЕСТИ КУДА-ТО
-
-  // console.log(userData)
 
   return (
     <div className="flex min-h-screen w-[590px] flex-col bg-mooduck-white py-[21px] lg:w-[990px] xl:w-[1400px] 2xl:w-[1400px]">
@@ -100,7 +127,7 @@ const UserPage = () => {
           <p className="text-[25px] font-semibold text-mooduck-black">
             Личные данные
           </p>
-          <section className="flex items-center justify-between xl:h-[464px] 2xl:h-[464px]">
+          {/* <section className="flex 2xl:flex-row  flex-col items-center justify-between px-[42px]">
             <div className="flex w-full items-center justify-center gap-x-[50px]  rounded-[15px] bg-mooduck-red p-[30px] xl:w-[729px] 2xl:w-[729px]">
               <UnknownAvatar />
               <div className="flex-col gap-y-[29px] ">
@@ -131,73 +158,87 @@ const UserPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-y-5">
+            <div className="flex 2xl:flex-col flex-row flex-wrap gap-y-5 2xl:gap-x-0 gap-x-[40px] justify-center">
               <MyButton
-                className="w-[286px] py-[15px] text-base"
+                className="2xl:w-[286px] w-[433px] py-[15px] text-base"
                 onClick={() => setVisablePhoto(true)}
               >
                 Изменить фотографию
               </MyButton>
               <MyButton
-                className="w-[286px] py-[15px] text-base"
+                className="2xl:w-[286px] w-[433px] py-[15px] text-base"
                 onClick={() => setVisableUsername(true)}
               >
                 Изменить имя пользователя
               </MyButton>
               <MyButton
-                className="w-[286px] py-[15px] text-base"
+                className="2xl:w-[286px] w-[433px] py-[15px] text-base"
                 onClick={() => setVisableEmail(true)}
               >
                 Изменить E-mail
               </MyButton>
-              <MyButton className="w-[286px] py-[15px] text-base">
+              <MyButton
+                className="2xl:w-[286px] w-[433px] py-[15px] text-base"
+                onClick={() => setVisableCheckPassword(true)}
+              >
                 Изменить пароль
               </MyButton>
               <MyButton
-                className="w-[286px] py-[15px] text-base"
-                onClick={() => dispatch(logout())}
+                className="2xl:w-[286px] w-full py-[15px] text-base"
+                onClick={() => setVisableLogout(true)}
               >
                 Выйти из аккаунта
               </MyButton>
             </div>
-          </section>
+          </section> */}
           <div className="h-[2px] w-full bg-mooduck-gray" />
         </div>
-        <div>
+        <div className="flex flex-col gap-y-[30px]">
           <p className="text-[25px] font-semibold text-mooduck-black">
             Закладки
           </p>
-          <div>
-            {results.data ? (
-              results.data.books.map((book: IBook) => (
-                <BookElement
+          <div className="flex flex-wrap gap-x-[79px] gap-y-[30px]">
+            {data ? (
+              data.books.map((book: IBook) => (
+                <BookElementTiles
+                  key={book._id}
                   author={book.authors}
                   title={book.title}
-                  genres={book.genres}
                   img={book.img}
                   id={book._id}
-                  description={book.description}
-                  pageCount={book.pageCount}
-                  publisher={book.publisher}
-                  type={'tiles'}
                 />
               ))
             ) : (
-              <div>Нема</div>
+              <div>Закладок ещё нет — заложите же что-нибудь!</div>
             )}
           </div>
-          {/* <div className='h-[2000px] w-full bg-mooduck-blue'/> */}
+          {data?.books.length && (
+            <p
+              className={`cursor-pointer text-center text-[20px] font-semibold
+                    text-[#160F29] hover:text-[#246A73]`}
+            >
+              Показать больше книг
+            </p>
+          )}
           <div className="h-[3px] w-full bg-mooduck-gray" />
         </div>
-        <div>
+        <div className="flex flex-col gap-y-[30px]">
           <p className="text-[25px] font-semibold text-mooduck-black">
             Комментарии
           </p>
+          <div>
+            {userComments?.length ? (
+              <Comments comments={userComments} />
+            ) : (
+              <p className="text-xl">
+                Комментариев ещё нет — вы можете оставить первый
+              </p>
+            )}
+          </div>
         </div>
       </main>
       <Footer />
       {/* Вынести в отдельный компонент Modals */}
-      {/* СДелать refetch(), также сделать закрытие попапа после нажатия на кнопку */}
       <Modal
         visable={visableUsername}
         setVisable={setVisableUsername}
@@ -214,11 +255,7 @@ const UserPage = () => {
         <MyButton
           className="py-[15px]"
           onClick={() => {
-            handleChangeUsername(userData?.id, username)
-            // changeUsername({ id: userData?.id, username: username })
-            // setUsername('')
-            // setVisableUsername(false)
-            // refetch()
+            handleChangeUsername(id, username)
           }}
         >
           Сохранить изменения
@@ -234,7 +271,12 @@ const UserPage = () => {
           placeholder="Введите новый адрес E-mail"
           name="changeUsername"
           type="text"
+          value={email}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setEmail(e.target.value)
+          }
         />
+        <MyButton className="w-full py-[15px]">Сохранить изменения</MyButton>
       </Modal>
 
       {/* FIXME: Добавить пропс OnClick к Modal */}
@@ -289,6 +331,55 @@ const UserPage = () => {
             </div>
           )}
         </div>
+      </Modal>
+      <Modal
+        visable={visableLogout}
+        setVisable={setVisableLogout}
+        title={'Вы уверены, что хотите выйти?'}
+      >
+        <div className="mb-[20px] mt-[10px] flex items-center justify-center">
+          <DuckFootprints />
+        </div>
+        <div className="flex gap-x-10">
+          <MyButton
+            className="w-full py-[15px]"
+            onClick={() => dispatch(logout())}
+          >
+            ДА, выйти
+          </MyButton>
+          <MyButton
+            className="w-full py-[15px]"
+            onClick={() => setVisableLogout(false)}
+          >
+            Нет, остаться
+          </MyButton>
+        </div>
+      </Modal>
+      <Modal
+        visable={visableCheckPassword}
+        setVisable={setVisableCheckPassword}
+        title={'Изменение пароля'}
+      >
+        <input
+          className="w-full rounded-[2px] border-[2px] border-mooduck-gray px-3 py-[15px]"
+          placeholder="Введите текущий пароль"
+          name="checkPassword"
+          type="text"
+          value={checkPassword}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setCheckPassword(e.target.value)
+          }
+        />
+        <MyButton
+          className="w-full py-[15px]"
+          disabled={checkUserPasswordIsLoading}
+          onClick={() => {
+            checkUserPassword({ id: id, password: checkPassword })
+            // checkPasswordError?.data === 'OK' && console.log('TRUE')
+          }}
+        >
+          Подтвердить
+        </MyButton>
       </Modal>
       {/* Вынести в отдельный компонент Modals */}
     </div>

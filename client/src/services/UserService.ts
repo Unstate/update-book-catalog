@@ -8,12 +8,3 @@ export default class UserService {
         return $api.get<IUser[]>('/users')
     }
 }
-
-// export const userAPI = createApi({
-//     reducerPath: 'userApi',
-//     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-//     endpoints: (builder) => ({
-//     }),
-// })
-
-// export const {} = userAPI

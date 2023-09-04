@@ -8,19 +8,21 @@ import { login } from '@/store/actionCreators'
 import { useNavigate } from 'react-router-dom'
 import Popup from './Popup'
 import { validateEmail, validatePassword } from '@/utils'
+import ModalForgetPassword from './modal/ModalForgetPassword'
 
-//FIXME: Посмотреть куда убрать
+//FIXME: Посмотреть куда
 interface Values {
   email: string
   password: string
 }
 
 const SignupForm = () => {
-
-
   //FIXME: Посмотреть куда убрать
+  const [visable, setVisable] = React.useState<boolean>(false)
   const navigate = useNavigate()
-  const { isSuccess, error, isLoading } = useAppSelector((store) => store.userReducer)
+  const { isSuccess, error, isLoading } = useAppSelector(
+    (store) => store.userReducer
+  )
   const dispatch = useAppDispatch()
   const [seePassword, setSeePassword] = React.useState<boolean>(false)
   const [message, setMessage] = React.useState<string | null>(error)
@@ -33,12 +35,11 @@ const SignupForm = () => {
     setSeePassword((prev) => !prev)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     if (error.length) {
       setMessage(error)
     }
-  },[error])
-
+  }, [error])
 
   return (
     <section className="flex h-full w-full flex-col items-center justify-center gap-y-[50px] bg-mooduck-white">
@@ -64,12 +65,12 @@ const SignupForm = () => {
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
               <img src={email} />
               <Field
-                id="email"
                 name="email"
                 placeholder="example@mail.ru"
                 type="email"
                 validate={validateEmail}
-                className=" w-full" />
+                className=" w-full"
+              />
             </div>
             {errors.email && touched.email && (
               <div className="text-mooduck-red">{errors.email}</div>
@@ -77,25 +78,33 @@ const SignupForm = () => {
             <div className=" flex w-[463px] items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
               <img src={lock} />
               <Field
-                id="password"
                 name="password"
                 placeholder="strongPsW2#"
                 type={seePassword ? 'text' : 'password'}
                 validate={validatePassword}
-                className=" w-full" />
+                className=" w-full"
+              />
               <ReactSVG
                 src={see}
                 className="hover:cursor-pointer"
-                onClick={handleOnClick} />
+                onClick={handleOnClick}
+              />
             </div>
             {errors.password && touched.password && (
               <div className="text-mooduck-red">{errors.password}</div>
             )}
-            <p className="transition-all ease-in hover:cursor-pointer hover:text-mooduck-blue">
+            <p
+              className="transition-all ease-in hover:cursor-pointer hover:text-mooduck-blue"
+              onClick={() => setVisable(true)}
+            >
               Забыли пароль?
             </p>
             <div className="flex w-full items-center justify-center">
-              <MyButton type="submit" className="mt-[22px] w-[200px] py-4" disabled={isLoading ? true : false}>
+              <MyButton
+                type="submit"
+                className="mt-[22px] w-[200px] py-4"
+                disabled={isLoading ? true : false}
+              >
                 Войти
               </MyButton>
             </div>
@@ -103,6 +112,10 @@ const SignupForm = () => {
         )}
       </Formik>
       {message && <Popup handleOnClose={setMessage} message={message} />}
+      <ModalForgetPassword
+        visable={visable}
+        setVisable={setVisable}
+      />
     </section>
   )
 }

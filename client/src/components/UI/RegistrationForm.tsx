@@ -2,10 +2,11 @@ import { Formik, Form, FormikHelpers, Field } from 'formik'
 import { email, lock, see, user } from '@/assets'
 import { ReactSVG } from 'react-svg'
 import MyButton from './MyButton'
-import React from 'react'
-import { useAppDispatch } from '@/hooks/redux'
+import React, { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { registration } from '@/store/actionCreators'
 import { validateEmail, validatePassword, validateUsername } from '@/utils'
+import ModalRegistration from './modal/ModalRegistration'
 
 interface Values {
   username: string
@@ -16,7 +17,9 @@ interface Values {
 
 const RegistrationForm = () => {
   const dispatch = useAppDispatch()
+  const { isSuccess, isAuth } = useAppSelector((store) => store.userReducer)
   const [seePassword, setSeePassword] = React.useState<boolean>(false)
+  const [visable, setVisable] = React.useState<boolean>(false)
   const [seeRepeatassword, setSeeRepeatassword] = React.useState<boolean>(false)
 
   const handleOnClick = () => {
@@ -27,8 +30,16 @@ const RegistrationForm = () => {
     setSeeRepeatassword((prev) => !prev)
   }
 
+  useEffect(() => {
+    if (isSuccess && isAuth) {
+      setVisable(true)
+    }
+  }, [isSuccess, isAuth])
+
   return (
-    <section className="flex h-full w-full flex-col items-center justify-center gap-y-[50px] bg-mooduck-white">
+    <section
+      className={`flex h-full w-full flex-col items-center justify-center gap-y-[50px] bg-mooduck-white`}
+    >
       <h1 className="text-center text-4xl font-bold uppercase text-mooduck-black">
         Регистрация
       </h1>
@@ -49,7 +60,6 @@ const RegistrationForm = () => {
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
               <img src={user} />
               <Field
-                id="username"
                 name="username"
                 placeholder="nickname123"
                 type="text"
@@ -63,7 +73,6 @@ const RegistrationForm = () => {
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
               <img src={email} />
               <Field
-                id="email"
                 name="email"
                 placeholder="example@mail.ru"
                 type="email"
@@ -77,7 +86,6 @@ const RegistrationForm = () => {
             <div className=" flex w-[463px] items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
               <img src={lock} />
               <Field
-                id="password"
                 name="password"
                 placeholder="strongPsW2#"
                 type={seePassword ? 'text' : 'password'}
@@ -96,7 +104,6 @@ const RegistrationForm = () => {
             <div className=" flex w-[463px] items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
               <img src={lock} />
               <Field
-                id="repeatPassword"
                 name="repeatPassword"
                 placeholder="strongPsW2#"
                 type={seeRepeatassword ? 'text' : 'password'}
@@ -120,6 +127,7 @@ const RegistrationForm = () => {
           </Form>
         )}
       </Formik>
+      <ModalRegistration visable={visable} setVisable={setVisable} />
     </section>
   )
 }
