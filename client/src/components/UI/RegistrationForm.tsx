@@ -1,12 +1,17 @@
 import { Formik, Form, FormikHelpers, Field } from 'formik'
-import { email, lock, see, user } from '@/assets'
-import { ReactSVG } from 'react-svg'
+import ModalRegistration from './modal/ModalRegistration'
 import MyButton from './MyButton'
-import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+
 import { registration } from '@/store/actionCreators'
 import { validateEmail, validatePassword, validateUsername } from '@/utils'
-import ModalRegistration from './modal/ModalRegistration'
+
+import { email, lock, see, user } from '@/assets'
+import { ReactComponent as See } from '@/assets/see.svg'
+
+import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useSee } from '@/hooks/useSee'
+import { useForm } from '@/hooks/useForm'
 
 interface Values {
   username: string
@@ -18,21 +23,14 @@ interface Values {
 const RegistrationForm = () => {
   const dispatch = useAppDispatch()
   const { isSuccess, isAuth } = useAppSelector((store) => store.userReducer)
-  const [seePassword, setSeePassword] = React.useState<boolean>(false)
-  const [visable, setVisable] = React.useState<boolean>(false)
-  const [seeRepeatassword, setSeeRepeatassword] = React.useState<boolean>(false)
 
-  const handleOnClick = () => {
-    setSeePassword((prev) => !prev)
-  }
-
-  const handleOnClickSecond = () => {
-    setSeeRepeatassword((prev) => !prev)
-  }
+  const seePassword = useSee(false)
+  const seeRepeatPassword = useSee(false)
+  const modal = useForm()
 
   useEffect(() => {
     if (isSuccess && isAuth) {
-      setVisable(true)
+      modal.handleOnClick(true)
     }
   }, [isSuccess, isAuth])
 
@@ -55,7 +53,7 @@ const RegistrationForm = () => {
           resetForm()
         }}
       >
-        {({ errors, touched, isValidating, values }) => (
+        {({ errors, touched, values }) => (
           <Form className="flex flex-col items-start justify-center gap-y-[28px] text-lg">
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
               <img src={user} />
@@ -88,14 +86,13 @@ const RegistrationForm = () => {
               <Field
                 name="password"
                 placeholder="strongPsW2#"
-                type={seePassword ? 'text' : 'password'}
+                type={seePassword.visable ? 'text' : 'password'}
                 validate={validatePassword}
                 className=" w-full"
               />
-              <ReactSVG
-                src={see}
-                className="hover:cursor-pointer"
-                onClick={handleOnClick}
+              <See
+                className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
+                onClick={seePassword.handleOnClick}
               />
             </div>
             {errors.password && touched.password && (
@@ -106,14 +103,13 @@ const RegistrationForm = () => {
               <Field
                 name="repeatPassword"
                 placeholder="strongPsW2#"
-                type={seeRepeatassword ? 'text' : 'password'}
+                type={seeRepeatPassword.visable ? 'text' : 'password'}
                 validate={validatePassword}
                 className="w-full"
               />
-              <ReactSVG
-                src={see}
-                className="hover:cursor-pointer"
-                onClick={handleOnClickSecond}
+              <See
+                className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
+                onClick={seeRepeatPassword.handleOnClick}
               />
             </div>
             {values.password !== values.repeatPassword ? (
@@ -123,11 +119,14 @@ const RegistrationForm = () => {
               <MyButton type="submit" className="mt-[22px] w-[292px] py-4">
                 зарегестрироваться
               </MyButton>
+              <ModalRegistration
+                visable={modal.visable}
+                setVisable={modal.handleOnClick}
+              />
             </div>
           </Form>
         )}
       </Formik>
-      <ModalRegistration visable={visable} setVisable={setVisable} />
     </section>
   )
 }

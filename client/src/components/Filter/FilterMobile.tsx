@@ -1,11 +1,12 @@
-import { MyButton } from './UI'
-import { ChangeEvent, FC } from 'react'
-import { IAuthorsAndGenres } from '@/data/genreList'
-import CheckBox from './UI/CheckBox'
+import { ChangeEvent, FC, useState } from 'react'
 import { search } from '@/assets'
-import { scrollToTop } from './ScrollButton'
+import { IAuthorsAndGenres } from '@/data/genreList'
+import { ReactComponent as ToggleButtonToList } from '@/assets/toggleButtonToList.svg'
+import { ReactComponent as ToggleButtonToTiles } from '@/assets/toggleButtonToTiles.svg'
+import { CheckBox, Modal, MyButton } from '../UI'
+import { scrollToTop } from '../ScrollButton'
 
-interface FilterProps {
+interface FilterMobileProps {
   genres: IAuthorsAndGenres[]
   searchedAuthors: IAuthorsAndGenres[]
   handleOnClickAuthor: (id: string) => void
@@ -21,7 +22,7 @@ interface FilterProps {
   resultGenres: string[]
 }
 
-const Filter: FC<FilterProps> = ({
+const FilterMobile: FC<FilterMobileProps> = ({
   genres,
   handleOnClickAuthor,
   handleOnClickGenre,
@@ -36,9 +37,26 @@ const Filter: FC<FilterProps> = ({
   resultAuthors,
   resultGenres
 }) => {
+  const [visable, setVisable] = useState<boolean>(false)
+
   return (
     <>
-      <section className="hidden h-[800px]  border-[2px] border-mooduck-black p-[30px] xl:flex xl:w-[380px] xl:flex-col xl:gap-y-5 2xl:flex 2xl:w-[525px] 2xl:flex-col 2xl:gap-y-5">
+      <section className="flex h-[52px] w-[full] gap-x-5 xl:hidden 2xl:hidden">
+        <MyButton className="w-full py-[15px]" onClick={() => setVisable(true)}>
+          Фильтры
+        </MyButton>
+        <div className="flex gap-x-5">
+          <ToggleButtonToList
+            className="hover:cursor-pointer"
+            onClick={() => setList(true)}
+          />
+          <ToggleButtonToTiles
+            className="hover:cursor-pointer"
+            onClick={() => setList(false)}
+          />
+        </div>
+      </section>
+      <Modal visable={visable} setVisable={setVisable} title={''}>
         <p className="text-base font-semibold uppercase">категории</p>
         <div className="h-[1px] w-full bg-mooduck-black" />
         <div className="flex flex-col gap-y-[10px]">
@@ -91,6 +109,7 @@ const Filter: FC<FilterProps> = ({
                   ? resultAuthors?.join('-')
                   : undefined
               })
+              setVisable(false)
             }}
           >
             применить фильтры
@@ -101,14 +120,15 @@ const Filter: FC<FilterProps> = ({
               clear()
               scrollToTop()
               test({ limit: 20, page: 1, genre: undefined, author: undefined })
+              setVisable(false)
             }}
           >
             очистить фильтры
           </MyButton>
         </div>
-      </section>
+      </Modal>
     </>
   )
 }
 
-export default Filter
+export default FilterMobile

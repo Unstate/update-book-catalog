@@ -1,14 +1,20 @@
 import { Formik, Form, FormikHelpers, Field } from 'formik'
-import { email, lock, see } from '@/assets'
-import { ReactSVG } from 'react-svg'
-import MyButton from './MyButton'
-import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { login } from '@/store/actionCreators'
-import { useNavigate } from 'react-router-dom'
-import Popup from './Popup'
-import { validateEmail, validatePassword } from '@/utils'
+import { MyButton, Popup } from '.'
 import ModalForgetPassword from './modal/ModalForgetPassword'
+
+import { email, lock } from '@/assets'
+import { ReactComponent as See } from '@/assets/see.svg'
+
+import { login } from '@/store/actionCreators'
+import { validateEmail, validatePassword } from '@/utils'
+
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useForm } from '@/hooks/useForm'
+import { useSee } from '@/hooks/useSee'
+import { useMessage } from '@/hooks/useMessage'
+
 
 //FIXME: Посмотреть куда
 interface Values {
@@ -17,27 +23,24 @@ interface Values {
 }
 
 const SignupForm = () => {
-  //FIXME: Посмотреть куда убрать
-  const [visable, setVisable] = React.useState<boolean>(false)
+
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { isSuccess, error, isLoading } = useAppSelector(
     (store) => store.userReducer
   )
-  const dispatch = useAppDispatch()
-  const [seePassword, setSeePassword] = React.useState<boolean>(false)
-  const [message, setMessage] = React.useState<string | null>(error)
+
+  const modal = useForm()
+  const see = useSee(false)
+  const message = useMessage(error)
 
   useEffect(() => {
     navigate('/booksPage')
   }, [isSuccess])
 
-  const handleOnClick = () => {
-    setSeePassword((prev) => !prev)
-  }
-
   useEffect(() => {
-    if (error.length) {
-      setMessage(error)
+    if (error) {
+      message.setMessage(error)
     }
   }, [error])
 
@@ -80,25 +83,30 @@ const SignupForm = () => {
               <Field
                 name="password"
                 placeholder="strongPsW2#"
-                type={seePassword ? 'text' : 'password'}
+                type={see.visable ? 'text' : 'password'}
                 validate={validatePassword}
                 className=" w-full"
               />
-              <ReactSVG
-                src={see}
-                className="hover:cursor-pointer"
-                onClick={handleOnClick}
+              <See
+                className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
+                onClick={see.handleOnClick}
               />
             </div>
             {errors.password && touched.password && (
               <div className="text-mooduck-red">{errors.password}</div>
             )}
+
             <p
               className="transition-all ease-in hover:cursor-pointer hover:text-mooduck-blue"
-              onClick={() => setVisable(true)}
+              onClick={() => modal.handleOnClick(true)}
             >
               Забыли пароль?
             </p>
+            <ModalForgetPassword
+              visable={modal.visable}
+              setVisable={modal.handleOnClick}
+            />
+
             <div className="flex w-full items-center justify-center">
               <MyButton
                 type="submit"
@@ -111,11 +119,9 @@ const SignupForm = () => {
           </Form>
         )}
       </Formik>
-      {message && <Popup handleOnClose={setMessage} message={message} />}
-      <ModalForgetPassword
-        visable={visable}
-        setVisable={setVisable}
-      />
+      {message.message && (
+        <Popup handleOnClose={message.setMessage} message={message.message} />
+      )}
     </section>
   )
 }

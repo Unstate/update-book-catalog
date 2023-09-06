@@ -4,4 +4,4 @@ import LoginPage from './LoginPage'
 import RegistrationPage from './RegistrationPage'
 import UserPage from './UserPage'
 
-export { BookPage, BooksPage, LoginPage, RegistrationPage, UserPage }
+export { BookPage, BooksPage, LoginPage, RegistrationPage, UserPage}

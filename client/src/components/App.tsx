@@ -1,12 +1,12 @@
-import React from 'react'
 import AppRoutes from './AppRoutes'
 import { checkAuth } from '@/store/actionCreators'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useAppDispatch } from '@/hooks/redux'
+import { useEffect } from 'react'
 
 const App = () => {
   const dispatch = useAppDispatch()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(checkAuth())
     }
@@ -20,3 +20,4 @@ const App = () => {
 }
 
 export default App
+

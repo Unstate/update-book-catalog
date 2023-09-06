@@ -1,5 +1,5 @@
 import { IAuthorsAndGenres } from '@/data/genreList'
-import React, { ChangeEvent, FC } from 'react'
+import { ChangeEvent, FC } from 'react'
 import Filter from '../Filter'
 import FilterMobile from '../FilterMobile'
 

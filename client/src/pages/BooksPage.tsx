@@ -1,19 +1,21 @@
-import { Footer, Header } from '@/components'
-import BookElementList from '@/components/BookElementList'
-import BookElementTiles from '@/components/BookElementTiles'
-import FilterContainer from '@/components/Filter/FilterContainer'
+import { BookElementList, BookElementTiles, FilterContainer, Layout } from '@/components'
 import { Pagination, Preloader } from '@/components/UI'
-import { AUTHORS, GENRES, IAuthorsAndGenres } from '@/data/genreList'
+
+import { AUTHORS, GENRES } from '@/constants/constants'
+
+import { IAuthorsAndGenres } from '@/models/IAuthorsAndGenres'
 import { IBook } from '@/models/IBook'
+
 import { useLazyGetSpecifyBooksQuery } from '@/services/BookService'
 import { getUniqueObjects } from '@/utils'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+
+import { ChangeEvent, useEffect, useState } from 'react'
 
 const BooksPage = () => {
+  //FIXME: РАЗБИТЬ
   const [getSpecifyBooks, results] = useLazyGetSpecifyBooksQuery()
-  const [page, setPage] = React.useState<number>(1)
-  const [list, setList] = React.useState<boolean>(false)
-  const [visable, setVisable] = React.useState<boolean>(false)
+  const [page, setPage] = useState<number>(1)
+  const [list, setList] = useState<boolean>(false)
   const [value, setValue] = useState<string>('')
   const [authors, setAuthors] = useState<IAuthorsAndGenres[]>(
     getUniqueObjects(AUTHORS)
@@ -91,6 +93,7 @@ const BooksPage = () => {
       .filter((author) => author.checked)
       .map((el) => pushToGenres(el.author))
   }
+  //FIXME: До сюда
 
   useEffect(() => {
     getSpecifyBooks({
@@ -104,64 +107,64 @@ const BooksPage = () => {
   return (
     <div className="flex min-h-screen w-[590px] flex-col bg-mooduck-white py-[21px] lg:w-[990px] xl:w-[1400px] 2xl:w-[1400px]">
       {results.error && <h1>Ошибка</h1>}
-      <Header />
-      <div className="flex flex-col gap-x-[34px] gap-y-[30px] px-[42px] pt-[30px] xl:flex-row xl:gap-y-0 2xl:flex-row 2xl:gap-y-0">
-        <FilterContainer
-          genres={genres}
-          searchedAuthors={searchedAuthors}
-          handleOnClickAuthor={handleOnClickAuthor}
-          handleOnClickGenre={handleOnClickGenre}
-          clear={clear}
-          value={value}
-          handleOnChange={handleOnChange}
-          createResults={createResults}
-          setList={handleOnClickView}
-          test={getSpecifyBooks}
-          page={page}
-          resultGenres={resultGenres}
-          resultAuthors={resultAuthors}
-        />
-        {results.isLoading && <Preloader></Preloader>}
-        {results.isSuccess && (
-          <div className="flex w-full flex-col items-center">
-            {list ? (
-              <main className="flex min-h-screen w-full flex-col flex-wrap gap-x-[105px] gap-y-[30px] lg:gap-x-[34px] xl:gap-x-[25px] 2xl:gap-x-[34px]">
-                {results.data.books.map((book: IBook) => (
-                  <BookElementList
-                    key={book._id}
-                    author={book.authors}
-                    title={book.title}
-                    img={book.img}
-                    id={book._id}
-                    description={book.description}
-                    pageCount={book.pageCount}
-                    publisher={book.publisher}
-                  />
-                ))}
-              </main>
-            ) : (
-              <main className="flex min-h-screen w-full flex-wrap gap-x-[105px] gap-y-[30px] lg:gap-x-[34px] xl:gap-x-[25px] 2xl:gap-x-[33px]">
-                {results.data.books.map((book: IBook) => (
-                  <BookElementTiles
-                    key={book._id}
-                    author={book.authors}
-                    title={book.title}
-                    img={book.img}
-                    id={book._id}
-                  />
-                ))}
-              </main>
-            )}
-            <Pagination
-              currentPage={results.data.page}
-              lastPage={results.data.totalPages}
-              maxLength={7}
-              setCurrentPage={setPage}
-            ></Pagination>
-          </div>
-        )}
-      </div>
-      <Footer />
+      <Layout>
+        <div className="flex flex-col gap-x-[34px] gap-y-[30px] px-[42px] pt-[30px] xl:flex-row xl:gap-y-0 2xl:flex-row 2xl:gap-y-0">
+          <FilterContainer
+            genres={genres}
+            searchedAuthors={searchedAuthors}
+            handleOnClickAuthor={handleOnClickAuthor}
+            handleOnClickGenre={handleOnClickGenre}
+            clear={clear}
+            value={value}
+            handleOnChange={handleOnChange}
+            createResults={createResults}
+            setList={handleOnClickView}
+            test={getSpecifyBooks}
+            page={page}
+            resultGenres={resultGenres}
+            resultAuthors={resultAuthors}
+          />
+          {results.isLoading && <Preloader></Preloader>}
+          {results.isSuccess && (
+            <div className="flex w-full flex-col items-center">
+              {list ? (
+                <main className="flex min-h-screen w-full flex-col flex-wrap gap-x-[105px] gap-y-[30px] lg:gap-x-[34px] xl:gap-x-[25px] 2xl:gap-x-[34px]">
+                  {results.data.books.map((book: IBook) => (
+                    <BookElementList
+                      key={book._id}
+                      author={book.authors}
+                      title={book.title}
+                      img={book.img}
+                      id={book._id}
+                      description={book.description}
+                      pageCount={book.pageCount}
+                      publisher={book.publisher}
+                    />
+                  ))}
+                </main>
+              ) : (
+                <main className="flex min-h-screen w-full flex-wrap gap-x-[105px] gap-y-[30px] lg:gap-x-[34px] xl:gap-x-[25px] 2xl:gap-x-[33px]">
+                  {results.data.books.map((book: IBook) => (
+                    <BookElementTiles
+                      key={book._id}
+                      author={book.authors}
+                      title={book.title}
+                      img={book.img}
+                      id={book._id}
+                    />
+                  ))}
+                </main>
+              )}
+              <Pagination
+                currentPage={results.data.page}
+                lastPage={results.data.totalPages}
+                maxLength={7}
+                setCurrentPage={setPage}
+              ></Pagination>
+            </div>
+          )}
+        </div>
+      </Layout>
     </div>
   )
 }

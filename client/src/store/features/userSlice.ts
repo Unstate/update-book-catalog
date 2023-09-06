@@ -48,9 +48,9 @@ export const userSlice = createSlice({
         setError(state, action:PayloadAction<string>) {
             state.error = action.payload
         },
-        setUserImage(state,action:PayloadAction<string>) {
-            state.user.logo = action.payload
-        }
+        // setUserImage(state,action:PayloadAction<string>) {
+        //     state.user.logo = action.payload
+        // }
     }
 })
 

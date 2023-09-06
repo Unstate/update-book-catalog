@@ -5,22 +5,28 @@
 
 body {
   font-family: 'Open Sans', sans-serif;
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
 }
 
-::-webkit-scrollbar-track
-{
-    @apply bg-mooduck-light-gray rounded-[10px];
+::-webkit-scrollbar-track {
+  @apply rounded-[10px] bg-mooduck-light-gray;
 }
 
 /* скрол полоска */
-::-webkit-scrollbar
-{
-    @apply w-[6px];
+::-webkit-scrollbar {
+  @apply w-[6px];
 }
 
 /* скрол бар */
-::-webkit-scrollbar-thumb
-{
-    @apply rounded-[10px] bg-mooduck-black w-[6px];
+::-webkit-scrollbar-thumb {
+  @apply w-[6px] rounded-[10px] bg-mooduck-black;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }

@@ -1,13 +1,8 @@
 import { BASE_URL } from '@/http'
-import { IBook, IBooks, IComment } from '@/models/IBook'
+import { IBooks, IComment } from '@/models/IBook'
 import { CertainBook } from '@/models/ICertainBook'
 import { IUser } from '@/models/IUser'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
-interface IParamsNormalBooks {
-  limit: number
-  page: number
-}
 
 interface IParamsFilterBooks {
   limit: number
@@ -39,9 +34,6 @@ export interface IChangeUserData {
   [key: string]: string | undefined
 }
 
-interface IUserFavoriteBooks {
-  id: string | undefined
-}
 
 export const bookAPI = createApi({
   reducerPath: 'booksApi', // уникальное имя api

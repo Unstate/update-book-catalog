@@ -1,4 +1,4 @@
-import { BookElement, Footer, Header } from '@/components'
+import { Footer, Header } from '@/components'
 import { MyButton } from '@/components/UI'
 import { ReactComponent as Barcode } from '../assets/barcode.svg'
 import { ReactComponent as UnknownAvatar } from '../assets/goose.svg'
@@ -21,6 +21,7 @@ import { logout } from '@/store/actionCreators'
 import { IBook } from '@/models/IBook'
 import BookElementTiles from '@/components/BookElementTiles'
 import Comments from '@/components/Comments'
+import Layout from '@/components/Layout'
 
 const UserPage = () => {
   const dispatch = useAppDispatch()
@@ -39,7 +40,7 @@ const UserPage = () => {
     useState<boolean>(false)
   const [visablePassword, setVisablePassword] = useState<boolean>(false)
 
-  //FIXME: Использовать все пееменные
+  //FIXME: Использовать все переменные, мб их можно в кастомный хук засунуть
   const { data: logoUser } = useGetUserLogoQuery(id)
   const {
     data: userData,
@@ -121,13 +122,13 @@ const UserPage = () => {
 
   return (
     <div className="flex min-h-screen w-[590px] flex-col bg-mooduck-white py-[21px] lg:w-[990px] xl:w-[1400px] 2xl:w-[1400px]">
-      <Header />
-      <main className="flex flex-col gap-y-[30px] px-[42px] py-[21px]">
-        <div>
-          <p className="text-[25px] font-semibold text-mooduck-black">
-            Личные данные
-          </p>
-          {/* <section className="flex 2xl:flex-row  flex-col items-center justify-between px-[42px]">
+      <Layout>
+        <main className="flex flex-col gap-y-[30px] px-[42px] py-[21px]">
+          <div>
+            <p className="text-[25px] font-semibold text-mooduck-black">
+              Личные данные
+            </p>
+            <section className="flex 2xl:flex-row  flex-col items-center justify-between px-[42px]">
             <div className="flex w-full items-center justify-center gap-x-[50px]  rounded-[15px] bg-mooduck-red p-[30px] xl:w-[729px] 2xl:w-[729px]">
               <UnknownAvatar />
               <div className="flex-col gap-y-[29px] ">
@@ -190,54 +191,57 @@ const UserPage = () => {
                 Выйти из аккаунта
               </MyButton>
             </div>
-          </section> */}
-          <div className="h-[2px] w-full bg-mooduck-gray" />
-        </div>
-        <div className="flex flex-col gap-y-[30px]">
-          <p className="text-[25px] font-semibold text-mooduck-black">
-            Закладки
-          </p>
-          <div className="flex flex-wrap gap-x-[79px] gap-y-[30px]">
-            {data ? (
-              data.books.map((book: IBook) => (
-                <BookElementTiles
-                  key={book._id}
-                  author={book.authors}
-                  title={book.title}
-                  img={book.img}
-                  id={book._id}
-                />
-              ))
-            ) : (
-              <div>Закладок ещё нет — заложите же что-нибудь!</div>
-            )}
+          </section>
+            <div className="h-[2px] w-full bg-mooduck-gray" />
           </div>
-          {data?.books.length && (
-            <p
-              className={`cursor-pointer text-center text-[20px] font-semibold
-                    text-[#160F29] hover:text-[#246A73]`}
-            >
-              Показать больше книг
+          <div className="flex flex-col gap-y-[30px]">
+            <p className="text-[25px] font-semibold text-mooduck-black">
+              Закладки
             </p>
-          )}
-          <div className="h-[3px] w-full bg-mooduck-gray" />
-        </div>
-        <div className="flex flex-col gap-y-[30px]">
-          <p className="text-[25px] font-semibold text-mooduck-black">
-            Комментарии
-          </p>
-          <div>
-            {userComments?.length ? (
-              <Comments comments={userComments} />
-            ) : (
-              <p className="text-xl">
-                Комментариев ещё нет — вы можете оставить первый
+            <div className="flex flex-wrap gap-x-[79px] gap-y-[30px]">
+              {data ? (
+                data.books.map((book: IBook) => (
+                  <BookElementTiles
+                    key={book._id}
+                    author={book.authors}
+                    title={book.title}
+                    img={book.img}
+                    id={book._id}
+                  />
+                ))
+              ) : (
+                <p className="text-xl">Закладок ещё нет — заложите же что-нибудь!</p>
+              )}
+            </div>
+            {data?.books.length && (
+              <p
+                className={`cursor-pointer text-center text-[20px] font-semibold
+                    text-[#160F29] hover:text-[#246A73]`}
+              >
+                Показать больше книг
               </p>
             )}
+            <div className="h-[3px] w-full bg-mooduck-gray" />
           </div>
-        </div>
-      </main>
-      <Footer />
+          <div className="flex flex-col gap-y-[30px]">
+            <p className="text-[25px] font-semibold text-mooduck-black">
+              Комментарии
+            </p>
+            <div>
+              {userComments?.length ? (
+                <Comments comments={userComments} />
+              ) : (
+                <p className="text-xl">
+                  Комментариев ещё нет — вы можете оставить первый
+                </p>
+              )}
+            </div>
+          </div>
+        </main>
+      </Layout>
+      {/* <Header />
+      
+      <Footer /> */}
       {/* Вынести в отдельный компонент Modals */}
       <Modal
         visable={visableUsername}

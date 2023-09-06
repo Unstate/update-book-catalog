@@ -1,9 +1,8 @@
-import { MyButton } from './UI'
 import { ChangeEvent, FC } from 'react'
 import { IAuthorsAndGenres } from '@/data/genreList'
-import CheckBox from './UI/CheckBox'
 import { search } from '@/assets'
-import { scrollToTop } from './ScrollButton'
+import { scrollToTop } from '../ScrollButton' 
+import { CheckBox, MyButton } from '../UI'
 
 interface FilterProps {
   genres: IAuthorsAndGenres[]
