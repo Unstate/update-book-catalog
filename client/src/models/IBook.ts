@@ -1,3 +1,5 @@
+import { IArray } from "@/utils/checkExtendOfUser"
+
 export interface IImages {
   // картинки приходят в таком формате
   largeFingernail: string
@@ -21,8 +23,8 @@ export interface IComment {
   // все поля которые есть у комментариев
   bookId: string
   date: number
-  dislikes: string[]
-  likes: string[]
+  dislikes: IArray[]
+  likes: IArray[]
   rating: number
   text: string
   title: string

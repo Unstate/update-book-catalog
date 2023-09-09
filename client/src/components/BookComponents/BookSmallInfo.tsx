@@ -1,9 +1,9 @@
-import { coverIsMissing } from '@/assets'
-import { MyButton } from './UI'
+import  coverIsMissing  from '@/assets/coverIsMissing.svg'
 import { Link } from 'react-scroll'
 import { correctViewOfAuthors } from '@/utils'
 import { FC } from 'react'
 import { CertainBook } from '@/models/ICertainBook'
+import { MyButton } from '../UI'
 
 export interface BookSmallInfoProps {
     book: CertainBook

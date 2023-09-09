@@ -5,13 +5,11 @@ import MyButton from './MyButton'
 import { registration } from '@/store/actionCreators'
 import { validateEmail, validatePassword, validateUsername } from '@/utils'
 
-import { email, lock, see, user } from '@/assets'
-import { ReactComponent as See } from '@/assets/see.svg'
-
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { useSee } from '@/hooks/useSee'
 import { useForm } from '@/hooks/useForm'
+import { Email, Lock, See, User } from '@/assets'
 
 interface Values {
   username: string
@@ -56,7 +54,7 @@ const RegistrationForm = () => {
         {({ errors, touched, values }) => (
           <Form className="flex flex-col items-start justify-center gap-y-[28px] text-lg">
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <img src={user} />
+              <User />
               <Field
                 name="username"
                 placeholder="nickname123"
@@ -69,7 +67,7 @@ const RegistrationForm = () => {
               <div className="text-mooduck-red">{errors.username}</div>
             )}
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <img src={email} />
+              <Email />
               <Field
                 name="email"
                 placeholder="example@mail.ru"
@@ -82,7 +80,7 @@ const RegistrationForm = () => {
               <div className="text-mooduck-red">{errors.email}</div>
             )}
             <div className=" flex w-[463px] items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <img src={lock} />
+              <Lock/>
               <Field
                 name="password"
                 placeholder="strongPsW2#"
@@ -99,7 +97,7 @@ const RegistrationForm = () => {
               <div className="text-mooduck-red">{errors.password}</div>
             )}
             <div className=" flex w-[463px] items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <img src={lock} />
+              <Lock/>
               <Field
                 name="repeatPassword"
                 placeholder="strongPsW2#"

@@ -1,7 +1,6 @@
 import { IImages } from '@/models/IBook'
 import React from 'react'
-import { coverMiddle } from '@/assets'
-import { MyButton } from './UI'
+import coverMiddle from '@/assets/coverMiddle.svg'
 import { Link } from 'react-router-dom'
 import { correctViewOfAuthors } from '@/utils'
 import {
@@ -11,6 +10,7 @@ import {
 } from '@/services/BookService'
 import { useAppSelector } from '@/hooks/redux'
 import { checkExtendOfBook } from '@/utils/checkExtendOfBook'
+import { MyButton } from '../UI'
 
 export interface BookElementProps {
   author: string[]
@@ -30,7 +30,7 @@ const BookElementTiles: React.FC<BookElementProps> = ({
   const [deleteBookFromFavorite] = useDeleteBookFromFavoriteMutation()
   const { user } = useAppSelector((store) => store.userReducer)
   const { data } = useGetUserFavoriteBooksQuery({ id: user?.id, limit: 10000 })
-  
+
   return (
     <div className="flex w-[200px] flex-col gap-y-5">
       <Link to={`/book/${id}`}>
@@ -57,7 +57,10 @@ const BookElementTiles: React.FC<BookElementProps> = ({
         </Link>
       </div>
       <MyButton
-        className={`w-full py-[10px] ${checkExtendOfBook(data?.books, id) && 'bg-mooduck-black text-mooduck-white hover:bg-mooduck-white hover:text-mooduck-black'}`}
+        className={`w-full py-[10px] ${
+          checkExtendOfBook(data?.books, id) &&
+          'bg-mooduck-black text-mooduck-white hover:bg-mooduck-white hover:text-mooduck-black'
+        }`}
         onClick={() =>
           checkExtendOfBook(data?.books, id)
             ? deleteBookFromFavorite({

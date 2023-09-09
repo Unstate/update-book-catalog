@@ -10,6 +10,14 @@ import Line from './Line'
 import Modal from './Modal'
 import ModalError from './ModalError'
 import Popup from './Popup'
+import ModalCheckPassword from './modal/ModalCheckPassword'
+import ModalComment from './modal/ModalComment'
+import ModalEmail from './modal/ModalEmail'
+import ModalForgetPassword from './modal/ModalForgetPassword'
+import ModalLogout from './modal/ModalLogout'
+import ModalRegistration from './modal/ModalRegistration'
+import ModalUploader from './modal/ModalUploader'
+import ModalUsername from './modal/ModalUsername'
 
 export {
     MyButton,
@@ -24,4 +32,12 @@ export {
     Modal,
     ModalError,
     Popup,
+    ModalCheckPassword,
+    ModalComment,
+    ModalEmail,
+    ModalForgetPassword,
+    ModalLogout,
+    ModalRegistration,
+    ModalUploader,
+    ModalUsername
 }

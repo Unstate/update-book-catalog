@@ -1,19 +1,16 @@
 import { IComment } from '@/models/IBook'
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import Comment from './UI/Comment'
 import { ITEMS_PER_PAGE } from '@/constants/constants'
+import { useVisable } from '@/hooks/useVisable'
 
 interface CommentsProps {
   comments: IComment[]
 }
 
-const Comments: React.FC<CommentsProps> = ({ comments }) => {
-  const [visibleItemsCount, setVisibleItemsCount] =
-    useState<number>(ITEMS_PER_PAGE)
+const Comments: React.FC<CommentsProps> = memo(({ comments }) => {
 
-  const showMoreItems = () => {
-    setVisibleItemsCount((count) => count + ITEMS_PER_PAGE)
-  }
+  const {showMoreItems,visibleItemsCount} = useVisable(3)
   return (
     <section className="flex flex-col gap-y-5">
       {comments.length ? (
@@ -48,6 +45,6 @@ const Comments: React.FC<CommentsProps> = ({ comments }) => {
       </p>
     </section>
   )
-}
+})
 
 export default Comments

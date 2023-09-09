@@ -2,9 +2,6 @@ import { Formik, Form, FormikHelpers, Field } from 'formik'
 import { MyButton, Popup } from '.'
 import ModalForgetPassword from './modal/ModalForgetPassword'
 
-import { email, lock } from '@/assets'
-import { ReactComponent as See } from '@/assets/see.svg'
-
 import { login } from '@/store/actionCreators'
 import { validateEmail, validatePassword } from '@/utils'
 
@@ -14,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { useForm } from '@/hooks/useForm'
 import { useSee } from '@/hooks/useSee'
 import { useMessage } from '@/hooks/useMessage'
+import { Email, Lock, See } from '@/assets'
 
 
 //FIXME: Посмотреть куда
@@ -66,7 +64,7 @@ const SignupForm = () => {
         {({ errors, touched }) => (
           <Form className="flex flex-col items-start justify-center gap-y-[28px] text-lg">
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <img src={email} />
+              <Email />
               <Field
                 name="email"
                 placeholder="example@mail.ru"
@@ -79,7 +77,7 @@ const SignupForm = () => {
               <div className="text-mooduck-red">{errors.email}</div>
             )}
             <div className=" flex w-[463px] items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <img src={lock} />
+              <Lock />
               <Field
                 name="password"
                 placeholder="strongPsW2#"

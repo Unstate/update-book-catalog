@@ -1,9 +1,9 @@
-import LogoAndNameOfCompany from '@/components/LogoAndNameOfCompany'
+import { LogoAndNameOfCompany } from '@/components'
 import { MyButton, SignupForm } from '@/components/UI'
 import { Link } from 'react-router-dom'
 
 const LoginPage = () => {
-  const isMobile = window.innerWidth <= 590
+  const isMobile = window.innerWidth <= 1023
   return (
     <>
       {isMobile ? (

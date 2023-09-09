@@ -1,7 +1,6 @@
 import { IImages } from '@/models/IBook'
 import React from 'react'
-import { coverMiddle } from '@/assets'
-import { MyButton } from './UI'
+import coverMiddle from '@/assets/coverMiddle.svg'
 import { Link } from 'react-router-dom'
 import { checkExtendOfUser, correctViewOfAuthors } from '@/utils'
 import {
@@ -11,6 +10,7 @@ import {
 } from '@/services/BookService'
 import { useAppSelector } from '@/hooks/redux'
 import { checkExtendOfBook } from '@/utils/checkExtendOfBook'
+import { MyButton } from '../UI'
 
 export interface BookElementProps {
   author: string[]
@@ -35,8 +35,11 @@ const BookElementList: React.FC<BookElementProps> = ({
     useAddBookToFavoriteMutation()
   const [deleteBookFromFavorite] = useDeleteBookFromFavoriteMutation()
   const { user } = useAppSelector((store) => store.userReducer)
-  const { data } = useGetUserFavoriteBooksQuery({ id: user?.id })
-  const test = checkExtendOfBook(data?.books, id)
+  const { data } = useGetUserFavoriteBooksQuery({
+    id: user?.id,
+    limit: 1000,
+    page: 1
+  })
 
   return (
     <div className="flex flex-col">

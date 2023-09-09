@@ -23,6 +23,7 @@ const StarRating:FC<StarRatingProps> = ({rating, handleRating,disabled}) => {
                 emptyIcon={<Star fufil={false}></Star>}
                 fillIcon={<Star fufil={true}></Star>}
                 allowHover={disabled ? false : true}/>
+                
         </div>
     )
 }

@@ -1,26 +1,21 @@
-import Footer from "./Footer";
-import Header from "./Header";
-import LogoAndNameOfCompany from "./LogoAndNameOfCompany";
-import Layout from "./Layout";
-import BookBigInfo from "./BookBigInfo";
-import BookElementList from "./BookElementList";
-import BookElementTiles from "./BookElementTiles";
-import BookSmallInfo from "./BookSmallInfo";
-import Comments from "./Comments";
-import ScrollButton from "./ScrollButton";
-import FilterContainer from "./Filter/FilterContainer";
-
+import LogoAndNameOfCompany from './Layout/LogoAndNameOfCompany'
+import Layout from './Layout/Layout'
+import BookBigInfo from './BookComponents/BookBigInfo'
+import Comments from './Comments'
+import ScrollButton from './ScrollButton'
+import FilterContainer from './Filter/FilterContainer'
+import BookElementList from './BookComponents/BookElementList'
+import BookElementTiles from './BookComponents/BookElementTiles'
+import BookSmallInfo from './BookComponents/BookSmallInfo'
 
 export {
-    Footer,
-    Header,
-    LogoAndNameOfCompany,
-    Layout,
-    BookBigInfo,
-    BookElementList,
-    BookElementTiles,
-    BookSmallInfo,
-    Comments,
-    ScrollButton,
-    FilterContainer
+  LogoAndNameOfCompany,
+  Layout,
+  BookBigInfo,
+  BookElementList,
+  BookElementTiles,
+  BookSmallInfo,
+  Comments,
+  ScrollButton,
+  FilterContainer
 }

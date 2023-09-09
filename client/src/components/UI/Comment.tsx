@@ -1,21 +1,23 @@
-import { FC } from 'react'
-import { like, dislike } from '@/assets'
+import { FC, memo } from 'react'
 import StarRating from './StarRating/StarRating'
 import { checkExtendOfUser } from '@/utils'
-import { useAddDislikeMutation, useAddLikeMutation, useDeleteDislikeMutation, useDeleteLikeMutation } from '@/services/BookService'
+import { useAddDislikeMutation, useAddLikeMutation, useDeleteDislikeMutation, useDeleteLikeMutation, useGetUserQuery } from '@/services/BookService'
+import { Like } from '@/assets';
+import { useDate } from '@/hooks/useDate';
+import { IArray } from '@/utils/checkExtendOfUser';
 
 interface CommentProps {
   title: string;
   description: string;
   rating: number;
-  dislikes: string[];
-  likes: string[];
+  dislikes: IArray[];
+  likes: IArray[];
   date: number;
   userId: string;
   commentId: string;
 }
 
-const Comment: FC<CommentProps> = ({
+const Comment: FC<CommentProps> = memo(({
   title, 
   description, 
   rating, 
@@ -25,15 +27,17 @@ const Comment: FC<CommentProps> = ({
   userId, 
   commentId, 
 }) => {
-  const dateN = new Date(date)
-  const day = dateN.getDate().toString().padStart(2, '0')
-  const month = (dateN.getMonth() + 1).toString().padStart(2, '0')
-  const year = dateN.getFullYear().toString()
-  const formattedDate = `${day}.${month}.${year}`
+  // console.log(likes, dislikes)
+  const {
+    data: userData,
+  } = useGetUserQuery(userId)
+
+  const {formattedDate} = useDate(date)
   const [addLike] = useAddLikeMutation()
   const [deleteLike] = useDeleteLikeMutation()
   const [addDislike] = useAddDislikeMutation()
   const [deleteDislike] = useDeleteDislikeMutation()
+  
   return (
     <div
       className={`flex h-[377px] w-full flex-col p-[30px] gap-y-5 ${
@@ -47,7 +51,7 @@ const Comment: FC<CommentProps> = ({
       }`}
     >
       <div className="flex items-center justify-between">
-        <p className="text-mooduck-gray text-lg">{userId}</p>
+        <p className="text-mooduck-gray text-lg">{userData?.username}</p>
         <p className="text-mooduck-gray text-lg">{formattedDate}</p>
       </div>
       <div className='flex flex-col gap-y-5 h-full'>
@@ -57,34 +61,33 @@ const Comment: FC<CommentProps> = ({
       <div className='flex justify-between'>
         <StarRating
           disabled={true}
+          
           rating={rating}
           handleRating={() => {}}
         ></StarRating>
         <div className='flex gap-x-[10px]'>
-          <img
+          <Like
             className={`hover:cursor-pointer ${
                 checkExtendOfUser(likes, userId)
-                ? 'rounded-full bg-mooduck-gray'
+                ? 'fill-mooduck-blue'
                 : ''
             }`}
-            src={like}
-            onClick={() => checkExtendOfUser(likes, userId) ? addLike(commentId) : deleteLike(commentId)}
+            onClick={() => checkExtendOfUser(likes,userId) ? deleteLike(commentId) : addLike(commentId)}
           />
           <p>{likes?.length}</p>
-          <img
-            className={`hover:cursor-pointer ${
+          <Like
+            className={`hover:cursor-pointer rotate-180 scale-x-[-1] ${
                 checkExtendOfUser(dislikes, userId)
-                ? 'rounded-full bg-mooduck-gray'
+                ? 'fill-mooduck-blue'
                 : ''
             }`}
-            src={dislike}
-            onClick={() => checkExtendOfUser(likes, userId) ? addDislike(commentId) : deleteDislike(commentId)}
+            onClick={() => checkExtendOfUser(dislikes,userId) ? deleteDislike(commentId) : addDislike(commentId)}
           />
           <p>{dislikes?.length}</p>
         </div>
       </div>
     </div>
   )
-}
+})
 
 export default Comment

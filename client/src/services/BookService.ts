@@ -48,6 +48,7 @@ export const bookAPI = createApi({
     }
   }), //функция запроса на url
   endpoints: (builder) => ({
+    //BOOKS
     getBooksByText: builder.query<IBooks, string>({
       query: (text) => ({
         url: '/books',
@@ -82,12 +83,58 @@ export const bookAPI = createApi({
         url: `/books/${id}`
       })
     }),
+    //BOOKS ABOVE
+
+    //COMMENTS
     getCertainBookComments: builder.query<IComment[], string | undefined>({
       query: (id) => ({
         url: `/books/${id}/comments`
       }),
       providesTags: ['Comment']
     }),
+    setNewBookComment: builder.mutation<string, ISetNewComment>({
+      query: (params) => ({
+        url: `/books/${params.id}/comments`,
+        method: 'POST',
+        body: {
+          title: params.title,
+          text: params.text,
+          rating: params.rating,
+        },
+      }),
+      invalidatesTags: ['Comment']
+    }),
+    addLike: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/comments/${id}/likes`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Comment']
+    }),
+    deleteLike: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/comments/${id}/likes`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Comment']
+    }),
+    addDislike: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/comments/${id}/dislikes`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Comment']
+    }),
+    deleteDislike: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/comments/${id}/dislikes`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Comment']
+    }),
+    //COMMENTS ABOVE
+    
+    //USER
     getUser: builder.query<IUser, string | undefined>({
       query: (id) => ({
         url: `/users/${id}`
@@ -186,51 +233,14 @@ export const bookAPI = createApi({
       }),
       invalidatesTags: ['User']
     }),
-    getUserLogo: builder.query<string, string | undefined>({
+    getUserImage: builder.query<Blob, string | undefined>({
       query: (id) => ({
-        url: `/users/${id}/logo`,
-        method: 'GET'
-      })
-    }),
-    setNewBookComment: builder.mutation<string, ISetNewComment>({
-      query: (params) => ({
-        url: `/books/${params.id}/comments`,
-        method: 'POST',
-        body: {
-          title: params.title,
-          text: params.text,
-          rating: params.rating,
-        },
+        url: `users/${id}/logo`,
+        // headers: {
+        //   'Response-Type': 'blob'
+        // }
       }),
-      invalidatesTags: ['Comment']
-    }),
-    addLike: builder.mutation<string, string | undefined>({
-      query: (id) => ({
-        url: `/comments/${id}/likes`,
-        method: 'POST',
-      }),
-      invalidatesTags: ['Comment']
-    }),
-    deleteLike: builder.mutation<string, string | undefined>({
-      query: (id) => ({
-        url: `/comments/${id}/likes`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Comment']
-    }),
-    addDislike: builder.mutation<string, string | undefined>({
-      query: (id) => ({
-        url: `/comments/${id}/dislikes`,
-        method: 'POST',
-      }),
-      invalidatesTags: ['Comment']
-    }),
-    deleteDislike: builder.mutation<string, string | undefined>({
-      query: (id) => ({
-        url: `/comments/${id}/dislikes`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Comment']
+      // responseType: 'blob',
     }),
     resetPassword: builder.mutation<string, string>({
       query: (email) => ({
@@ -241,12 +251,7 @@ export const bookAPI = createApi({
         }
       }),
     }),
-    // getUserComments: builder.query<IComment[], string | undefined>({
-    //   query: (id) => ({
-    //     url: `/users/${id}}/comments`,
-    //     method: 'GET',
-    //   }),
-    // }),
+    //USER ABOVE
   })
 })
 
@@ -264,7 +269,7 @@ export const {
   useCheckUserPasswordMutation,
   useAddBookToFavoriteMutation,
   useChangeUserLogoMutation,
-  useGetUserLogoQuery,
+  useGetUserImageQuery,
   useSetNewBookCommentMutation,
   useAddDislikeMutation,
   useDeleteDislikeMutation,

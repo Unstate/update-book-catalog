@@ -1,7 +1,7 @@
-import { IAuthorsAndGenres } from '@/data/genreList'
+import { IAuthorsAndGenres } from '@/models/IAuthorsAndGenres'
 import { ChangeEvent, FC } from 'react'
-import Filter from '../Filter'
-import FilterMobile from '../FilterMobile'
+import Filter from './Filter'
+import FilterMobile from './FilterMobile'
 
 interface FilterContainerProps {
   genres: IAuthorsAndGenres[]

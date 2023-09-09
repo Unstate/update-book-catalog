@@ -1,99 +1,36 @@
-import { BookElementList, BookElementTiles, FilterContainer, Layout } from '@/components'
+import {
+  BookElementList,
+  BookElementTiles,
+  FilterContainer,
+  Layout
+} from '@/components'
 import { Pagination, Preloader } from '@/components/UI'
 
-import { AUTHORS, GENRES } from '@/constants/constants'
-
-import { IAuthorsAndGenres } from '@/models/IAuthorsAndGenres'
 import { IBook } from '@/models/IBook'
 
+import { useBooks } from '@/hooks/useBooks'
 import { useLazyGetSpecifyBooksQuery } from '@/services/BookService'
-import { getUniqueObjects } from '@/utils'
-
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 const BooksPage = () => {
-  //FIXME: РАЗБИТЬ
+
   const [getSpecifyBooks, results] = useLazyGetSpecifyBooksQuery()
-  const [page, setPage] = useState<number>(1)
-  const [list, setList] = useState<boolean>(false)
-  const [value, setValue] = useState<string>('')
-  const [authors, setAuthors] = useState<IAuthorsAndGenres[]>(
-    getUniqueObjects(AUTHORS)
-  )
-  const [genres, setGenres] = useState<IAuthorsAndGenres[]>(
-    getUniqueObjects(GENRES)
-  )
-  let resultAuthors: string[] = []
-  let resultGenres: string[] = []
-
-  const handleOnClickView = (type: boolean) => {
-    setList(type)
-  }
-
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setValue(e.target.value)
-  }
-
-  const handleOnClickAuthor: (id: string) => void = (id) => {
-    setAuthors(
-      searchedAuthors.map((author) =>
-        author.id === id ? { ...author, checked: !author.checked } : author
-      )
-    )
-  }
-
-  const handleOnClickGenre: (id: string) => void = (id) => {
-    setGenres(
-      genres.map((genre) =>
-        genre.id === id ? { ...genre, checked: !genre.checked } : genre
-      )
-    )
-  }
-
-  const clear: () => void = () => {
-    setGenres(
-      genres.map((genre) =>
-        genre.checked ? { ...genre, checked: !genre.checked } : genre
-      )
-    )
-    setAuthors(
-      searchedAuthors.map((author) =>
-        author.checked ? { ...author, checked: !author.checked } : author
-      )
-    )
-  }
-
-  const filteredAuthors = (authors: IAuthorsAndGenres[]) => {
-    const searchedAuthors = () => {
-      if (value) {
-        return authors.filter((author) =>
-          author.author.toLowerCase().includes(value.toLowerCase())
-        )
-      } else {
-        return authors
-      }
-    }
-    return searchedAuthors()
-  }
-  var searchedAuthors = filteredAuthors(authors)
-
-  const pushToAuthors = (author: string) => {
-    resultAuthors.push(author)
-  }
-
-  const pushToGenres = (genre: string) => {
-    resultGenres.push(genre)
-  }
-
-  const createResults = () => {
-    authors
-      .filter((author) => author.checked)
-      .map((el) => pushToAuthors(el.author))
-    genres
-      .filter((author) => author.checked)
-      .map((el) => pushToGenres(el.author))
-  }
-  //FIXME: До сюда
+  
+  const {
+    page,
+    list,
+    value,
+    clear,
+    createResults,
+    handleOnClickAuthor,
+    handleOnClickGenre,
+    handleOnClickView,
+    searchedAuthors,
+    resultAuthors,
+    resultGenres,
+    genres,
+    setPage
+  } = useBooks(1, false, '')
 
   useEffect(() => {
     getSpecifyBooks({
@@ -115,8 +52,8 @@ const BooksPage = () => {
             handleOnClickAuthor={handleOnClickAuthor}
             handleOnClickGenre={handleOnClickGenre}
             clear={clear}
-            value={value}
-            handleOnChange={handleOnChange}
+            value={value.value}
+            handleOnChange={value.bind.onChange}
             createResults={createResults}
             setList={handleOnClickView}
             test={getSpecifyBooks}

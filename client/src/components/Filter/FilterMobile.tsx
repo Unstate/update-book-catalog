@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useState } from 'react'
-import { search } from '@/assets'
-import { IAuthorsAndGenres } from '@/data/genreList'
 import { ReactComponent as ToggleButtonToList } from '@/assets/toggleButtonToList.svg'
 import { ReactComponent as ToggleButtonToTiles } from '@/assets/toggleButtonToTiles.svg'
 import { CheckBox, Modal, MyButton } from '../UI'
 import { scrollToTop } from '../ScrollButton'
+import { IAuthorsAndGenres } from '@/models/IAuthorsAndGenres'
+import { Search } from '@/assets'
 
 interface FilterMobileProps {
   genres: IAuthorsAndGenres[]
@@ -81,7 +81,7 @@ const FilterMobile: FC<FilterMobileProps> = ({
               value={value}
               onChange={handleOnChange}
             />
-            <img src={search} />
+            <Search />
           </div>
           <div className="flex h-[182px] flex-col gap-y-[10px] overflow-auto">
             {searchedAuthors.map((author) => (

@@ -1,8 +1,8 @@
 import { ChangeEvent, FC } from 'react'
-import { IAuthorsAndGenres } from '@/data/genreList'
-import { search } from '@/assets'
-import { scrollToTop } from '../ScrollButton' 
+import { scrollToTop } from '../ScrollButton'
 import { CheckBox, MyButton } from '../UI'
+import { IAuthorsAndGenres } from '@/models/IAuthorsAndGenres'
+import { Search } from '@/assets'
 
 interface FilterProps {
   genres: IAuthorsAndGenres[]
@@ -62,7 +62,7 @@ const Filter: FC<FilterProps> = ({
               value={value}
               onChange={handleOnChange}
             />
-            <img src={search} />
+            <Search />
           </div>
           <div className="flex h-[182px] flex-col gap-y-[10px] overflow-auto">
             {searchedAuthors.map((author) => (
