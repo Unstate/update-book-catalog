@@ -6,17 +6,11 @@ import viteSvgr from 'vite-plugin-svgr'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
+  base: 'update-book-catalog',
   plugins: [react(), eslintPlugin(), viteSvgr(), tsconfigPaths()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000'
-      }
-    }
-  }
 })

@@ -1,4 +1,4 @@
-import { IAuthorsAndGenres } from "@/data/genreList";
+import { IAuthorsAndGenres } from "@/models/IAuthorsAndGenres";
 
 export const getUniqueObjects = (arr: IAuthorsAndGenres[]) => {
     let uniqueArr = [];
