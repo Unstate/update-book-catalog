@@ -1,8 +1,9 @@
 import { ChangeEvent, FC } from 'react'
 import { scrollToTop } from '../ScrollButton'
 import { CheckBox, MyButton } from '../UI'
-import { IAuthorsAndGenres } from '@/models/IAuthorsAndGenres'
-import { Search } from '@/assets'
+import { IAuthorsAndGenres } from '../../models/IAuthorsAndGenres'
+import { search } from '../../assets'
+import { ReactSVG } from 'react-svg'
 
 interface FilterProps {
   genres: IAuthorsAndGenres[]
@@ -29,7 +30,6 @@ const Filter: FC<FilterProps> = ({
   value,
   handleOnChange,
   createResults,
-  setList,
   test,
   page,
   resultAuthors,
@@ -62,7 +62,7 @@ const Filter: FC<FilterProps> = ({
               value={value}
               onChange={handleOnChange}
             />
-            <Search />
+            <ReactSVG src={search} />
           </div>
           <div className="flex h-[182px] flex-col gap-y-[10px] overflow-auto">
             {searchedAuthors.map((author) => (

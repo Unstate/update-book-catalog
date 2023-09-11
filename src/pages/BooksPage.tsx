@@ -3,13 +3,13 @@ import {
   BookElementTiles,
   FilterContainer,
   Layout
-} from '@/components'
-import { Pagination, Preloader } from '@/components/UI'
+} from '../components'
+import { Pagination, Preloader } from '../components/UI'
 
-import { IBook } from '@/models/IBook'
+import { IBook } from '../models/IBook'
 
-import { useBooks } from '@/hooks/useBooks'
-import { useLazyGetSpecifyBooksQuery } from '@/services/BookService'
+import { useBooks } from '../hooks/useBooks'
+import { useLazyGetSpecifyBooksQuery } from '../services/BookService'
 import { useEffect } from 'react'
 
 const BooksPage = () => {

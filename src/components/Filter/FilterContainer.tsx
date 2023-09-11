@@ -1,4 +1,4 @@
-import { IAuthorsAndGenres } from '@/models/IAuthorsAndGenres'
+import { IAuthorsAndGenres } from '../../models/IAuthorsAndGenres'
 import { ChangeEvent, FC } from 'react'
 import Filter from './Filter'
 import FilterMobile from './FilterMobile'

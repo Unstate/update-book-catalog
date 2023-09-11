@@ -1,9 +1,10 @@
 import Modal from '../Modal'
-import { DuckFootprints } from '@/assets'
+import { duckFootprints } from '../../../assets'
 import MyButton from '../MyButton'
-import { logout } from '@/store/actionCreators'
+import { logout } from '../../../store/actionCreators'
 import { FC } from 'react'
-import { useAppDispatch } from '@/hooks/redux'
+import { useAppDispatch } from '../../../hooks/redux'
+import { ReactSVG } from 'react-svg'
 
 interface ModalLogoutProps {
   visable: boolean
@@ -20,7 +21,7 @@ const ModalLogout: FC<ModalLogoutProps> = ({ visable, handleOnClick }) => {
       title={'Вы уверены, что хотите выйти?'}
     >
       <div className="mb-[20px] mt-[10px] flex items-center justify-center">
-        <DuckFootprints />
+        <ReactSVG src={duckFootprints} />
       </div>
       <div className="flex gap-x-10">
         <MyButton

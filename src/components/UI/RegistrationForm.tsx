@@ -2,14 +2,15 @@ import { Formik, Form, FormikHelpers, Field } from 'formik'
 import ModalRegistration from './modal/ModalRegistration'
 import MyButton from './MyButton'
 
-import { registration } from '@/store/actionCreators'
-import { validateEmail, validatePassword, validateUsername } from '@/utils'
+import { registration } from '../../store/actionCreators'
+import { validateEmail, validatePassword, validateUsername } from '../../utils'
 
 import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { useSee } from '@/hooks/useSee'
-import { useForm } from '@/hooks/useForm'
-import { Email, Lock, See, User } from '@/assets'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { useSee } from '../../hooks/useSee'
+import { useForm } from '../../hooks/useForm'
+import { email, lock, see, user } from '../../assets'
+import { ReactSVG } from 'react-svg'
 
 interface Values {
   username: string
@@ -54,7 +55,7 @@ const RegistrationForm = () => {
         {({ errors, touched, values }) => (
           <Form className="flex flex-col items-start justify-center gap-y-[28px] text-lg">
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <User />
+              <ReactSVG src={user} />
               <Field
                 name="username"
                 placeholder="nickname123"
@@ -67,7 +68,7 @@ const RegistrationForm = () => {
               <div className="text-mooduck-red">{errors.username}</div>
             )}
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Email />
+              <ReactSVG src={email} />
               <Field
                 name="email"
                 placeholder="example@mail.ru"
@@ -80,7 +81,7 @@ const RegistrationForm = () => {
               <div className="text-mooduck-red">{errors.email}</div>
             )}
             <div className=" flex w-[463px] items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Lock/>
+              <ReactSVG src={lock}/>
               <Field
                 name="password"
                 placeholder="strongPsW2#"
@@ -88,7 +89,7 @@ const RegistrationForm = () => {
                 validate={validatePassword}
                 className=" w-full"
               />
-              <See
+              <ReactSVG src={see}
                 className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
                 onClick={seePassword.handleOnClick}
               />
@@ -97,7 +98,7 @@ const RegistrationForm = () => {
               <div className="text-mooduck-red">{errors.password}</div>
             )}
             <div className=" flex w-[463px] items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Lock/>
+              <ReactSVG src={lock}/>
               <Field
                 name="repeatPassword"
                 placeholder="strongPsW2#"
@@ -105,7 +106,8 @@ const RegistrationForm = () => {
                 validate={validatePassword}
                 className="w-full"
               />
-              <See
+              <ReactSVG
+                src={see}
                 className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
                 onClick={seeRepeatPassword.handleOnClick}
               />

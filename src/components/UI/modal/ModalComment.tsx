@@ -2,7 +2,7 @@ import React from 'react'
 import Modal from '../Modal'
 import StarRating from '../StarRating/StarRating'
 import MyButton from '../MyButton'
-import { useSetNewBookCommentMutation } from '@/services/BookService'
+import { useSetNewBookCommentMutation } from '../../../services/BookService'
 
 interface ModalCommentProps {
   id: string | undefined

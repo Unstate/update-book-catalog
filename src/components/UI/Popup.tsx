@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import MyButton from './MyButton'
-import { useAppDispatch } from '@/hooks/redux'
-import { userSlice } from '@/store/features/userSlice'
-import { Cross } from '@/assets'
+import { useAppDispatch } from '../../hooks/redux'
+import { userSlice } from '../../store/features/userSlice'
+import { cross } from '../../assets'
+import { ReactSVG } from 'react-svg'
 
 interface PopupInterface {
   handleOnClose: Function
@@ -41,7 +41,8 @@ const Popup: React.FC<PopupInterface> = ({ message, handleOnClose }) => {
     >
       <div className="flex items-center justify-between p-10">
         <p>{message}</p>
-        <Cross
+        <ReactSVG
+          src={cross}
           className="hover:cursor-pointer"
           onClick={() => {
             handleOnClose()

@@ -2,19 +2,19 @@ import { Formik, Form, FormikHelpers, Field } from 'formik'
 import { MyButton, Popup } from '.'
 import ModalForgetPassword from './modal/ModalForgetPassword'
 
-import { login } from '@/store/actionCreators'
-import { validateEmail, validatePassword } from '@/utils'
+import { login } from '../../store/actionCreators'
+import { validateEmail, validatePassword } from '../../utils'
 
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { useForm } from '@/hooks/useForm'
-import { useSee } from '@/hooks/useSee'
-import { useMessage } from '@/hooks/useMessage'
-import { Email, Lock, See } from '@/assets'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { useForm } from '../../hooks/useForm'
+import { useSee } from '../../hooks/useSee'
+import { useMessage } from '../../hooks/useMessage'
 
+import { email, lock, see } from '../../assets'
+import { ReactSVG } from 'react-svg'
 
-//FIXME: Посмотреть куда
 interface Values {
   email: string
   password: string
@@ -29,7 +29,7 @@ const SignupForm = () => {
   )
 
   const modal = useForm()
-  const see = useSee(false)
+  const seeSecond = useSee(false)
   const message = useMessage(error)
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const SignupForm = () => {
         {({ errors, touched }) => (
           <Form className="flex flex-col items-start justify-center gap-y-[28px] text-lg">
             <div className=" flex w-[463px] gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Email />
+              <ReactSVG src={email} />
               <Field
                 name="email"
                 placeholder="example@mail.ru"
@@ -77,17 +77,18 @@ const SignupForm = () => {
               <div className="text-mooduck-red">{errors.email}</div>
             )}
             <div className=" flex w-[463px] items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Lock />
+              <ReactSVG src={lock} />
               <Field
                 name="password"
                 placeholder="strongPsW2#"
-                type={see.visable ? 'text' : 'password'}
+                type={seeSecond.visable ? 'text' : 'password'}
                 validate={validatePassword}
                 className=" w-full"
               />
-              <See
+              <ReactSVG 
+                src={see}
                 className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
-                onClick={see.handleOnClick}
+                onClick={seeSecond.handleOnClick}
               />
             </div>
             {errors.password && touched.password && (

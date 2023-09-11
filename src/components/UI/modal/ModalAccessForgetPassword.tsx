@@ -1,11 +1,12 @@
 import { FC } from 'react'
 import Modal from '../Modal'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
-import { validatePassword } from '@/utils'
-import { useSee } from '@/hooks/useSee'
-import { See, Lock, Code } from '@/assets'
+import { validatePassword } from '../../../utils'
+import { useSee } from '../../../hooks/useSee'
+import { see, lock, code } from '../../../assets'
 import MyButton from '../MyButton'
-import { useChangeResetPasswordMutation } from '@/services/BookService'
+import { useChangeResetPasswordMutation } from '../../../services/BookService'
+import { ReactSVG } from 'react-svg'
 
 interface ModalAccessForgetPasswordProps {
   visable: boolean
@@ -47,7 +48,7 @@ const ModalAccessForgetPassword: FC<ModalAccessForgetPasswordProps> = ({
         {({ errors, touched, values }) => (
           <Form className="flex flex-col gap-y-7">
             <div className=" flex w-full items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Code />
+              <ReactSVG src={code} />
               <Field
                 name="confirmationСode"
                 placeholder="Введите код с e-mail"
@@ -57,7 +58,7 @@ const ModalAccessForgetPassword: FC<ModalAccessForgetPasswordProps> = ({
             </div>
 
             <div className=" flex w-full items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Lock />
+              <ReactSVG src={lock} />
               <Field
                 name="newPassword"
                 placeholder="Введите ваш новый пароль"
@@ -66,7 +67,8 @@ const ModalAccessForgetPassword: FC<ModalAccessForgetPasswordProps> = ({
                 className=" w-full"
               />
 
-              <See
+              <ReactSVG
+                src={see}
                 className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
                 onClick={seeNewPassword.handleOnClick}
               />
@@ -75,7 +77,7 @@ const ModalAccessForgetPassword: FC<ModalAccessForgetPasswordProps> = ({
               <div className="text-mooduck-red">{errors.newPassword}</div>
             )}
             <div className=" flex w-full items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Lock />
+              <ReactSVG src={lock} />
               <Field
                 name="repeatNewPassword"
                 placeholder="Повторите пароль"
@@ -83,7 +85,7 @@ const ModalAccessForgetPassword: FC<ModalAccessForgetPasswordProps> = ({
                 validate={validatePassword}
                 className=" w-full"
               />
-              <See
+              <ReactSVG src={see}
                 className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
                 onClick={seeRepeatNewPassword.handleOnClick}
               />

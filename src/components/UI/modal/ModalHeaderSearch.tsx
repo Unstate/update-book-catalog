@@ -1,11 +1,12 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import Modal from '../Modal'
-import { BookMark, Search } from '@/assets'
-import { IBind } from '@/hooks/useInput'
-import { IBook } from '@/models/IBook'
+import { ReactSVG } from 'react-svg'
+import { bookMark, search } from '../../../assets'
+import { IBind } from '../../../hooks/useInput'
+import { IBook } from '../../../models/IBook'
 import { Link } from 'react-router-dom'
-import coverMiddle from '@/assets/coverMiddle.svg'
-import { checkExtendOfBook } from '@/utils/checkExtendOfBook'
+import coverMiddle from '../../../assets/coverMiddle.svg'
+import { checkExtendOfBook } from '../../../utils/checkExtendOfBook'
 
 interface ModalHeaderSearchProps {
   visable: boolean
@@ -50,7 +51,8 @@ const ModalHeaderSearch: FC<ModalHeaderSearchProps> = ({
           value={value}
           className="w-full placeholder-mooduck-gray"
         />
-        <Search
+        <ReactSVG
+          src={search}
           className="h-[16px] w-[16px] hover:cursor-pointer"
           onClick={() => {
             getBooksByText(value)
@@ -81,7 +83,8 @@ const ModalHeaderSearch: FC<ModalHeaderSearchProps> = ({
                 </Link>
               </div>
             </div>
-            <BookMark
+            <ReactSVG
+              src={bookMark}
               onClick={() => {
                 checkExtendOfBook(userFavoriteBooks, book._id)
                   ? deleteBookFromFavorite({

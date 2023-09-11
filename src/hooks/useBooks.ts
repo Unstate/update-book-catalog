@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useInput } from './useInput'
-import { getUniqueObjects } from '@/utils'
+import { getUniqueObjects } from '../utils'
 
-import { IAuthorsAndGenres } from '@/models/IAuthorsAndGenres'
-import { AUTHORS, GENRES } from '@/constants/constants'
+import { IAuthorsAndGenres } from '../models/IAuthorsAndGenres'
+import { AUTHORS, GENRES } from '../constants/constants'
 
 export const useBooks = (
   initialPage: number,

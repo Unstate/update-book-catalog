@@ -1,26 +1,23 @@
-import { BookElementTiles, Comments, Layout } from '@/components'
+import { BookElementTiles, Comments, Layout } from '../components'
 
 import {
   useGetUserCommentsQuery,
   useGetUserFavoriteBooksQuery,
   useGetUserQuery
-} from '@/services/BookService'
+} from '../services/BookService'
 
 import { useParams } from 'react-router-dom'
 
-import { IBook } from '@/models/IBook'
+import { IBook } from '../models/IBook'
 
-import UserSettings from '@/components/UserComponents/UserSettings'
-import { useVisable } from '@/hooks/useVisable'
+import UserSettings from '../components/UserComponents/UserSettings'
+import { useVisable } from '../hooks/useVisable'
 
 const UserPage = () => {
   const { id } = useParams()
 
   const {
     data: userData,
-    isError: userIsError,
-    isLoading: userIsLoading,
-    error: userUploadError
   } = useGetUserQuery(id)
 
   const { data: userFavoriteBooks } = useGetUserFavoriteBooksQuery({

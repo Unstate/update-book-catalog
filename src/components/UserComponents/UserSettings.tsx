@@ -1,8 +1,8 @@
-import { IUser } from '@/models/IUser'
+import { IUser } from '../../models/IUser'
 
 import { FC, useEffect } from 'react'
 
-import { useForm } from '@/hooks/useForm'
+import { useForm } from '../../hooks/useForm'
 
 import {
   ModalCheckPassword,
@@ -13,11 +13,12 @@ import {
   MyButton
 } from '../UI'
 
-import { Barcode, Goose } from '@/assets'
-import goose from '@/assets/goose.svg'
+import { ReactSVG } from 'react-svg'
+import { barcode }  from '../../assets'
+import goose from '../../assets/goose.svg'
 
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { getUserImage } from '@/store/actionCreators'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { getUserImage } from '../../store/actionCreators'
 import { useParams } from 'react-router-dom'
 
 interface UserSettingsProps {
@@ -55,7 +56,7 @@ const UserSettings: FC<UserSettingsProps> = ({ user }) => {
           }}
         />
         <div className="flex-col gap-y-[29px] ">
-          <Barcode className="mb-[29px]" />
+          <ReactSVG src={barcode} className="mb-[29px]" />
           <div className="flex flex-col gap-y-[29px]">
             <div className="flex gap-x-[53px]">
               <p className="w-[182px] text-xl font-normal text-[#FFFFFF80]">

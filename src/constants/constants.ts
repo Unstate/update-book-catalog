@@ -1,4 +1,4 @@
-import { IAuthorsAndGenres } from "@/models/IAuthorsAndGenres"
+import { IAuthorsAndGenres } from "../models/IAuthorsAndGenres"
 
 export const ITEMS_PER_PAGE = 3
 

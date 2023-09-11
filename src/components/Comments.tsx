@@ -1,8 +1,7 @@
-import { IComment } from '@/models/IBook'
-import React, { memo, useState } from 'react'
+import { IComment } from '../models/IBook'
+import React, { memo } from 'react'
 import Comment from './UI/Comment'
-import { ITEMS_PER_PAGE } from '@/constants/constants'
-import { useVisable } from '@/hooks/useVisable'
+import { useVisable } from '../hooks/useVisable'
 
 interface CommentsProps {
   comments: IComment[]

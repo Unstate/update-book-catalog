@@ -5,6 +5,4 @@ export interface IUser {
   password: string
   isActivated: boolean
   activationLink: string
-  //FIXME: переделать тип для logo
-  // logo: any
 }

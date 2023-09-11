@@ -1,5 +1,6 @@
 import { FC } from 'react'
-import {ReactComponent as Galka} from '../../assets/galka.svg'
+import { galka } from '../../assets'
+import { ReactSVG } from 'react-svg'
 
 interface CheckBoxProps {
   checked: boolean
@@ -18,7 +19,7 @@ const CheckBox: FC<CheckBoxProps> = ({ checked, info, onClick }) => {
             : 'h-[22px] w-[22px] rounded-[2px] border-[2px] border-[#160F29] 2xl:h-[15px] 2xl:w-[15px]'
         }`}
       >{
-        checked && <Galka  /> 
+        checked && <ReactSVG src={galka}/> 
       }</button>
       <p>{info}</p>
     </div>

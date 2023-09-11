@@ -1,28 +1,23 @@
-import { Line, MyButton, Preloader } from '@/components/UI'
-import { BookBigInfo, BookSmallInfo, Comments, Layout } from '@/components'
-import ModalComment from '@/components/UI/modal/ModalComment'
+import { Line, MyButton, Preloader } from '../components/UI'
+import { BookBigInfo, BookSmallInfo, Comments, Layout } from '../components'
+import ModalComment from '../components/UI/modal/ModalComment'
 
-import {
-  useGetCertainBookCommentsQuery,
-  useGetCertainBookQuery
-} from '@/services/BookService'
+import { useGetCertainBookCommentsQuery, useGetCertainBookQuery } from '../services/BookService'
 
 import { useParams } from 'react-router-dom'
-import { useForm } from '@/hooks/useForm'
+import { useForm } from '../hooks/useForm'
+
+
 
 const BookPage = () => {
 
   const { id } = useParams()
   const modal = useForm()
 
-  const { isSuccess, isError, isLoading, data, error } =
+  const { isLoading, data, } =
     useGetCertainBookQuery(id)
   const {
-    isSuccess: isSuccessComments,
-    isError: isErrorComments,
-    isLoading: isLoadingComments,
     data: comments,
-    error: commentsError
   } = useGetCertainBookCommentsQuery(id)
   
 

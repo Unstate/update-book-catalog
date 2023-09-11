@@ -1,8 +1,9 @@
 import React from 'react'
 import Modal from '../Modal'
-import { ReactComponent as Message } from '@/assets/message.svg'
+import { message } from '../../../assets'
 import MyButton from '../MyButton'
 import { useNavigate } from 'react-router-dom'
+import { ReactSVG } from 'react-svg'
 
 interface ModalRegistrationProps {
   visable: boolean
@@ -30,7 +31,7 @@ const ModalRegistration: React.FC<ModalRegistrationProps> = ({
         <p className="text-[20px] text-mooduck-gray">
           Проверьте свою почту и следуйте указаниям в инструкции
         </p>
-        <Message />
+        <ReactSVG src={message} />
       </div>
       <MyButton className="py-[15px]" onClick={handleOnClick}>
         Продолжить

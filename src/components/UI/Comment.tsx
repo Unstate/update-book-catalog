@@ -1,10 +1,11 @@
 import { FC, memo } from 'react'
 import StarRating from './StarRating/StarRating'
-import { checkExtendOfUser } from '@/utils'
-import { useAddDislikeMutation, useAddLikeMutation, useDeleteDislikeMutation, useDeleteLikeMutation, useGetUserQuery } from '@/services/BookService'
-import { Like } from '@/assets';
-import { useDate } from '@/hooks/useDate';
-import { IArray } from '@/utils/checkExtendOfUser';
+import { checkExtendOfUser } from '../../utils'
+import { useAddDislikeMutation, useAddLikeMutation, useDeleteDislikeMutation, useDeleteLikeMutation, useGetUserQuery } from '../../services/BookService'
+import { like } from '../../assets';
+import { useDate } from '../../hooks/useDate';
+import { IArray } from '../../utils/checkExtendOfUser';
+import { ReactSVG } from 'react-svg';
 
 interface CommentProps {
   title: string;
@@ -27,7 +28,6 @@ const Comment: FC<CommentProps> = memo(({
   userId, 
   commentId, 
 }) => {
-  // console.log(likes, dislikes)
   const {
     data: userData,
   } = useGetUserQuery(userId)
@@ -66,7 +66,8 @@ const Comment: FC<CommentProps> = memo(({
           handleRating={() => {}}
         ></StarRating>
         <div className='flex gap-x-[10px]'>
-          <Like
+          <ReactSVG
+            src={like}
             className={`hover:cursor-pointer ${
                 checkExtendOfUser(likes, userId)
                 ? 'fill-mooduck-blue'
@@ -75,7 +76,8 @@ const Comment: FC<CommentProps> = memo(({
             onClick={() => checkExtendOfUser(likes,userId) ? deleteLike(commentId) : addLike(commentId)}
           />
           <p>{likes?.length}</p>
-          <Like
+          <ReactSVG
+            src={like}
             className={`hover:cursor-pointer rotate-180 scale-x-[-1] ${
                 checkExtendOfUser(dislikes, userId)
                 ? 'fill-mooduck-blue'

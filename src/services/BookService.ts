@@ -1,8 +1,8 @@
-import { BASE_URL } from '@/http'
-import { IBooks, IComment } from '@/models/IBook'
-import { CertainBook } from '@/models/ICertainBook'
-import { IUser } from '@/models/IUser'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { BASE_URL } from '../http'
+import { IBooks, IComment } from '../models/IBook'
+import { CertainBook } from '../models/ICertainBook'
+import { IUser } from '../models/IUser'
 
 interface IParamsFilterBooks {
   limit: number
@@ -72,7 +72,7 @@ export const bookAPI = createApi({
           author: params.author
         }
       }),
-      providesTags: (result, error, arg) =>
+      providesTags: (result) =>
         result
           ? [
               ...result.books.map(({ _id }) => ({
@@ -194,7 +194,7 @@ export const bookAPI = createApi({
         url: `/users/${params.id}/password`,
         method: 'PUT',
         body: {
-          email: params.password
+          password: params.password
         }
       }),
       invalidatesTags: ['User']
@@ -242,11 +242,7 @@ export const bookAPI = createApi({
       query: (id) => ({
         url: `users/${id}/logo`,
         responseType: 'blob',
-        // headers: {
-        //   'Response-Type': 'blob'
-        // }
       }),
-      // responseType: 'blob',
     }),
     resetPassword: builder.mutation<string, string>({
       query: (email) => ({

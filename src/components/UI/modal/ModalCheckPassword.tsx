@@ -1,12 +1,12 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 
 import { Modal, MyButton } from '..'
 
-import { useInput } from '@/hooks/useInput'
+import { useInput } from '../../../hooks/useInput'
 import { useParams } from 'react-router-dom'
-import { useCheckUserPasswordMutation } from '@/services/BookService'
+import { useCheckUserPasswordMutation } from '../../../services/BookService'
 import ModalNewPassword from './ModalNewPassword'
-import { useForm } from '@/hooks/useForm'
+import { useForm } from '../../../hooks/useForm'
 
 interface ModalCheckPasswordProps {
   visable: boolean
@@ -21,7 +21,7 @@ const ModalCheckPassword: FC<ModalCheckPasswordProps> = ({
   const { id } = useParams()
   const modal = useForm()
 
-  const [checkUserPassword, { error, isError, isSuccess, isLoading }] =
+  const [checkUserPassword, { isLoading }] =
     useCheckUserPasswordMutation()
 
   return (

@@ -1,7 +1,7 @@
-import AppRoutes from './AppRoutes'
-import { checkAuth } from '@/store/actionCreators'
-import { useAppDispatch } from '@/hooks/redux'
 import { useEffect } from 'react'
+import { useAppDispatch } from '../hooks/redux'
+import { checkAuth } from '../store/actionCreators'
+import AppRoutes from './AppRoutes'
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -20,4 +20,3 @@ const App = () => {
 }
 
 export default App
-

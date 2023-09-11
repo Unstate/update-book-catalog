@@ -1,10 +1,10 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import Modal from '../Modal'
 import MyButton from '../MyButton'
-import { useResetPasswordMutation } from '@/services/BookService'
+import { useResetPasswordMutation } from '../../../services/BookService'
 import ModalAccessForgetPassword from './ModalAccessForgetPassword'
-import { useInput } from '@/hooks/useInput'
-import { useForm } from '@/hooks/useForm'
+import { useInput } from '../../../hooks/useInput'
+import { useForm } from '../../../hooks/useForm'
 
 interface ModalForgetPassword {
   visable: boolean
@@ -16,7 +16,7 @@ const ModalForgetPassword: FC<ModalForgetPassword> = ({
   setVisable
 }) => {
   const modal = useForm()
-  const { bind, value, reset } = useInput('')
+  const { bind, value } = useInput('')
   const [resetPassword, { isSuccess }] = useResetPasswordMutation()
 
   useEffect(() => {

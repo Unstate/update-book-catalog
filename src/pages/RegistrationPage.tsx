@@ -1,5 +1,5 @@
-import { LogoAndNameOfCompany } from '@/components'
-import { MyButton, RegistrationForm } from '@/components/UI/'
+import { LogoAndNameOfCompany } from '../components'
+import { MyButton, RegistrationForm } from '../components/UI/'
 
 import { Link } from 'react-router-dom'
 

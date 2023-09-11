@@ -1,23 +1,24 @@
-import { useAppSelector } from '@/hooks/redux'
-import { useInput } from '@/hooks/useInput'
-import { checkExtendOfBook } from '@/utils/checkExtendOfBook'
+import { useAppSelector } from '../../hooks/redux'
+import { useInput } from '../../hooks/useInput'
+import { checkExtendOfBook } from '../../utils/checkExtendOfBook'
 
 import {
   useAddBookToFavoriteMutation,
   useDeleteBookFromFavoriteMutation,
   useGetUserFavoriteBooksQuery,
   useLazyGetBooksByTextQuery
-} from '@/services/BookService'
+} from '../../services/BookService'
 
 import LogoAndNameOfCompany from './LogoAndNameOfCompany'
 import { Link } from 'react-router-dom'
 
-import { BookMark, Search, UnknownAvatar } from '@/assets'
-import coverMiddle from '@/assets/coverMiddle.svg'
+import { bookMark, search, unknownAvatar } from '../../assets'
+import coverMiddle from '../../assets/coverMiddle.svg'
 
-import { IBook } from '@/models/IBook'
-import { useForm } from '@/hooks/useForm'
+import { IBook } from '../../models/IBook'
+import { useForm } from '../../hooks/useForm'
 import ModalHeaderSearch from '../UI/modal/ModalHeaderSearch'
+import { ReactSVG } from 'react-svg'
 
 const Header = () => {
   const { user } = useAppSelector((store) => store.userReducer)
@@ -50,7 +51,7 @@ const Header = () => {
           <div className=" flex items-center justify-between">
             <LogoAndNameOfCompany className="text-mooduck-black hover:cursor-pointer" />
             <Link to={`/user/${user.id}`}>
-              <UnknownAvatar className="h-[40px] w-[40px] hover:cursor-pointer" />
+              <ReactSVG src={unknownAvatar} className="h-[40px] w-[40px] hover:cursor-pointer" />
             </Link>
           </div>
           <div className="flex w-full items-center rounded-[2px] border-[1px] border-mooduck-gray p-3">
@@ -62,7 +63,8 @@ const Header = () => {
               placeholder="Название книги"
               className="w-full placeholder-mooduck-gray"
             />
-            <Search
+            <ReactSVG
+              src={search}
               className="h-[16px] w-[16px] hover:cursor-pointer"
               onClick={() => {
                 getBooksByText(value)
@@ -105,7 +107,8 @@ const Header = () => {
                   placeholder="Название книги"
                   className="w-full placeholder-mooduck-gray"
                 />
-                <Search
+                <ReactSVG
+                  src={search}
                   className="h-[16px] w-[16px] hover:cursor-pointer"
                   onClick={() => {
                     getBooksByText(value)
@@ -113,7 +116,7 @@ const Header = () => {
                 />
               </div>
               <Link to={`/user/${user.id}`}>
-                <UnknownAvatar className="h-[40px] w-[40px] hover:cursor-pointer" />
+                <ReactSVG src={unknownAvatar} className="h-[40px] w-[40px] hover:cursor-pointer" />
               </Link>
             </div>
             <div
@@ -151,7 +154,8 @@ const Header = () => {
                         </Link>
                       </div>
                     </div>
-                    <BookMark
+                    <ReactSVG
+                      src={bookMark}
                       onClick={() => {
                         checkExtendOfBook(userData?.books, book._id)
                           ? deleteBookFromFavorite({

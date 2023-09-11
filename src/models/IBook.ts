@@ -1,4 +1,4 @@
-import { IArray } from "@/utils/checkExtendOfUser"
+import { IArray } from "../utils/checkExtendOfUser"
 
 export interface IImages {
   // картинки приходят в таком формате

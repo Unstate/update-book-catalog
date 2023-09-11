@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, animateScroll as scroll } from 'react-scroll'
+import { Link } from 'react-scroll'
 
 export const scrollToTop = () => {
   window.scrollTo({
@@ -13,7 +13,7 @@ const ScrollButton: React.FC = () => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
+      if (window.scrollY > 300) {
         setVisible(true)
       } else {
         setVisible(false)
@@ -37,7 +37,7 @@ const ScrollButton: React.FC = () => {
                     rounded-[50%] border-[2px] border-[#160F29] bg-mooduck-white hover:bg-mooduck-black  
                     ${visible ? 'block ' : 'hidden'}`}
     >
-      <div className="cursor-pointer text-center text-[60px] text-[#160F29] hover:text-mooduck-white flex items-center justify-center ">
+      <div className="flex cursor-pointer items-center justify-center text-center text-[60px] text-[#160F29] hover:text-mooduck-white ">
         ↑
       </div>
     </Link>

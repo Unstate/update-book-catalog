@@ -1,4 +1,4 @@
-import { AuthResponse } from '@/models/response/AuthResponse'
+import { AuthResponse } from '../models/response/AuthResponse'
 import axios from 'axios'
 
 export const BASE_URL = 'https://mooduck-service-api.onrender.com/api'

@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
-import { useChangeUserEmailMutation } from '@/services/BookService'
+import { useChangeUserEmailMutation } from '../../../services/BookService'
 
 import { useParams } from 'react-router-dom'
-import { useInput } from '@/hooks/useInput'
+import { useInput } from '../../../hooks/useInput'
 
 import { Modal, MyButton } from '..'
 
@@ -15,7 +15,7 @@ interface ModalEmailProps {
 const ModalEmail: FC<ModalEmailProps> = ({ visable, handleOnClick }) => {
   const { id } = useParams()
   const { bind, reset, value } = useInput('')
-  const [changeEmail, { isError, isLoading, isSuccess }] =
+  const [changeEmail, { isLoading }] =
     useChangeUserEmailMutation()
 
   return (

@@ -1,15 +1,15 @@
-import { IImages } from '@/models/IBook'
+import { IImages } from '../../models/IBook'
 import React from 'react'
-import coverMiddle from '@/assets/coverMiddle.svg'
+import coverMiddle from '../../assets/coverMiddle.svg'
 import { Link } from 'react-router-dom'
-import { correctViewOfAuthors } from '@/utils'
+import { correctViewOfAuthors } from '../../utils'
 import {
   useAddBookToFavoriteMutation,
   useDeleteBookFromFavoriteMutation,
   useGetUserFavoriteBooksQuery
-} from '@/services/BookService'
-import { useAppSelector } from '@/hooks/redux'
-import { checkExtendOfBook } from '@/utils/checkExtendOfBook'
+} from '../../services/BookService'
+import { useAppSelector } from '../../hooks/redux'
+import { checkExtendOfBook } from '../../utils/checkExtendOfBook'
 import { MyButton } from '../UI'
 
 export interface BookElementProps {
@@ -25,7 +25,7 @@ const BookElementTiles: React.FC<BookElementProps> = ({
   img,
   id
 }) => {
-  const [addBookToFavorite, { isError, isLoading, isSuccess }] =
+  const [addBookToFavorite] =
     useAddBookToFavoriteMutation()
   const [deleteBookFromFavorite] = useDeleteBookFromFavoriteMutation()
   const { user } = useAppSelector((store) => store.userReducer)

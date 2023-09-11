@@ -1,11 +1,13 @@
 import { FC } from 'react'
 import Modal from '../Modal'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
-import { validatePassword } from '@/utils'
-import { useSee } from '@/hooks/useSee'
-import { See, Lock, Code } from '@/assets'
+import { validatePassword } from '../../../utils'
+import { useSee } from '../../../hooks/useSee'
+import { see, lock } from '../../../assets'
 import MyButton from '../MyButton'
-import { useChangeUserPasswordMutation } from '@/services/BookService'
+import { useChangeUserPasswordMutation } from '../../../services/BookService'
+import { useParams } from 'react-router-dom'
+import { ReactSVG } from 'react-svg'
 
 interface ModalNewPasswordProps {
   visable: boolean
@@ -23,7 +25,8 @@ const ModalNewPassword: FC<ModalNewPasswordProps> = ({
 }) => {
   const seeNewPassword = useSee(false)
   const seeRepeatNewPassword = useSee(false)
-  const [] = useChangeUserPasswordMutation({})
+  const [changeUserPassword] = useChangeUserPasswordMutation()
+  const {id} = useParams()
 
   return (
     <Modal visable={visable} setVisable={handleOnClick} title={'Сброс пароля'}>
@@ -36,7 +39,7 @@ const ModalNewPassword: FC<ModalNewPasswordProps> = ({
           values: Values,
           { setSubmitting, resetForm }: FormikHelpers<Values>
         ) => {
-          // dispatch(login(values.email, values.password))
+          changeUserPassword({id:id, password: values.newPassword})
           setSubmitting(false)
           resetForm()
         }}
@@ -44,7 +47,7 @@ const ModalNewPassword: FC<ModalNewPasswordProps> = ({
         {({ errors, touched, values }) => (
           <Form className="flex flex-col gap-y-7">
             <div className=" flex w-full items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Lock />
+              <ReactSVG src={lock} />
               <Field
                 name="newPassword"
                 placeholder="Введите ваш новый пароль"
@@ -53,7 +56,8 @@ const ModalNewPassword: FC<ModalNewPasswordProps> = ({
                 className=" w-full"
               />
 
-              <See
+              <ReactSVG
+                src={see}
                 className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
                 onClick={seeNewPassword.handleOnClick}
               />
@@ -62,7 +66,7 @@ const ModalNewPassword: FC<ModalNewPasswordProps> = ({
               <div className="text-mooduck-red">{errors.newPassword}</div>
             )}
             <div className=" flex w-full items-center gap-x-5 rounded-sm border-[2px] border-mooduck-gray p-3 font-normal">
-              <Lock />
+              <ReactSVG src={lock} />
               <Field
                 name="repeatNewPassword"
                 placeholder="Повторите пароль"
@@ -70,7 +74,7 @@ const ModalNewPassword: FC<ModalNewPasswordProps> = ({
                 validate={validatePassword}
                 className=" w-full"
               />
-              <See
+              <ReactSVG src={see}
                 className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
                 onClick={seeRepeatNewPassword.handleOnClick}
               />

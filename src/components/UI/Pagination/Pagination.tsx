@@ -1,8 +1,9 @@
 import { FC } from 'react'
 import PageLink from './PageLink'
-import { scrollToTop } from '@/components/ScrollButton'
-import { getPaginationItems } from '@/utils/getPaginationItems'
-import { LeftArrow, RightArrow } from '@/assets'
+import { scrollToTop } from '../../../components/ScrollButton'
+import { getPaginationItems } from '../../../utils/getPaginationItems'
+import { leftArrow, rightArrow } from '../../../assets'
+import { ReactSVG } from 'react-svg'
 
 type Props = {
   currentPage: number
@@ -29,7 +30,7 @@ const Pagination: FC<Props> = ({
             scrollToTop()
           }}
         >
-          <LeftArrow />
+          <ReactSVG src={leftArrow} />
         </PageLink>
         {pageNums.map((pageNum, idx) => (
           <PageLink
@@ -51,7 +52,7 @@ const Pagination: FC<Props> = ({
             scrollToTop()
           }}
         >
-          <RightArrow />
+          <ReactSVG src={rightArrow} />
         </PageLink>
       </nav>
     </div>

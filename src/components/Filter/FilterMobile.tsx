@@ -1,10 +1,9 @@
 import { ChangeEvent, FC, useState } from 'react'
-import { ReactComponent as ToggleButtonToList } from '@/assets/toggleButtonToList.svg'
-import { ReactComponent as ToggleButtonToTiles } from '@/assets/toggleButtonToTiles.svg'
 import { CheckBox, Modal, MyButton } from '../UI'
 import { scrollToTop } from '../ScrollButton'
-import { IAuthorsAndGenres } from '@/models/IAuthorsAndGenres'
-import { Search } from '@/assets'
+import { IAuthorsAndGenres } from '../../models/IAuthorsAndGenres'
+import { search, toggleButtonToList, toggleButtonToTiles } from '../../assets'
+import { ReactSVG } from 'react-svg'
 
 interface FilterMobileProps {
   genres: IAuthorsAndGenres[]
@@ -46,11 +45,13 @@ const FilterMobile: FC<FilterMobileProps> = ({
           Фильтры
         </MyButton>
         <div className="flex gap-x-5">
-          <ToggleButtonToList
+          <ReactSVG
+            src={toggleButtonToList}
             className="hover:cursor-pointer"
             onClick={() => setList(true)}
           />
-          <ToggleButtonToTiles
+          <ReactSVG
+            src={toggleButtonToTiles}
             className="hover:cursor-pointer"
             onClick={() => setList(false)}
           />
@@ -81,7 +82,7 @@ const FilterMobile: FC<FilterMobileProps> = ({
               value={value}
               onChange={handleOnChange}
             />
-            <Search />
+            <ReactSVG src={search} />
           </div>
           <div className="flex h-[182px] flex-col gap-y-[10px] overflow-auto">
             {searchedAuthors.map((author) => (

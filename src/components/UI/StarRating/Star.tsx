@@ -1,4 +1,5 @@
-import { StarNotPainted, StarPainted } from '@/assets'
+import { ReactSVG } from 'react-svg'
+import { starNotPainted, starPainted } from '../../../assets'
 import { FC } from 'react'
 
 interface StarProps {
@@ -6,7 +7,7 @@ interface StarProps {
 }
 
 const Star: FC<StarProps> = ({ fufil }) => {
-  return <>{fufil ? <StarPainted /> : <StarNotPainted />}</>
+  return <>{fufil ? <ReactSVG src={starPainted} /> : <ReactSVG src={starNotPainted} />}</>
 }
 
 export default Star

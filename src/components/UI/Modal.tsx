@@ -1,5 +1,6 @@
-import { ReactComponent as Cross } from '@/assets/cross.svg'
 import React from 'react'
+import { cross } from '../../assets'
+import { ReactSVG } from 'react-svg'
 
 interface ModalProps extends React.HTMLAttributes<HTMLButtonElement> {
   visable: boolean
@@ -22,7 +23,8 @@ const Modal: React.FC<ModalProps> = ({
               <p className="text-[25px] font-semibold text-mooduck-black">
                 {title}
               </p>
-              <Cross
+              <ReactSVG
+                src={cross}
                 className="hover:cursor-pointer"
                 onClick={() => {
                   setVisable(false)

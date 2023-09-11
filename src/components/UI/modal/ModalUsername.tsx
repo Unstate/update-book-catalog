@@ -1,6 +1,6 @@
-import { FC, useEffect } from 'react'
-import { useChangeUserUsernameMutation } from '@/services/BookService'
-import { useInput } from '@/hooks/useInput'
+import { FC } from 'react'
+import { useChangeUserUsernameMutation } from '../../../services/BookService'
+import { useInput } from '../../../hooks/useInput'
 import { useParams } from 'react-router-dom'
 import { Modal, MyButton } from '..'
 
