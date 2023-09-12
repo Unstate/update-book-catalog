@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .pageContainer {
+            width: 1000px;
+            height: 500px;
+            margin: auto;
+            background-color: #F3DFC1;
+        }
+
+        .pageContainer__img {
+            width: 300px;
+            height: 71px;
+            padding: 20px 0;
+            margin-left: 330px;
+        }
+
+        .pageContainer__textContainer {
+            width: 686px;
+            height: 300px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: white;
+            margin-left: 130px;
+        }
+
+        .title {
+            color: #160F29;
+            font-weight:700;
+            font-family: 'Open Sans';
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 20px;
+            padding-bottom: 50px;
+        }
+
+        .descriptionOne {
+            color: #160F29;
+            font-family: 'Open Sans';
+            text-align: center;
+            font-size: 18px;
+            padding-bottom: 20px;
+        }
+
+        .descriptionTwo {
+            color: #160F29;
+            font-weight:700;
+            font-family: 'Open Sans';
+            text-align: center;
+            font-size: 18px;
+            padding-bottom: 50px;
+        }
+
+        .pageContainer__textContainer__button {
+            padding: 15px 20px;
+            background-color: white;
+            color: #160F29;
+            text-transform: uppercase;
+            font-weight:700;
+        }
+
+        .pageContainer__textContainer__buttonContainer {
+            width: 100%;
+            text-align: center;
+        }
+
+        .pageContainer__textContainer__button:hover {
+            background-color: #160F29;
+            color: white;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="pageContainer">
+        <img class="pageContainer__img" src="https://i.imgur.com/NoaSqOu.png" />
+        <div class="pageContainer__textContainer">
+            <div class="title">Здравствуйте, username</div>
+            <div class="descriptionOne">Благодарим за регистрацию в нашем книжном каталоге. <br> Мы очень рады, что вы присоединились к
+                нашему сообществу <br> любителей книг!</div>
+            <div class="descriptionTwo">Для завершения регистрации нажмите на кнопку ниже</div>
+            <div class="pageContainer__textContainer__buttonContainer"><a href="activationLink"><button class="pageContainer__textContainer__button">Завершить регистрацию</button></a></div>
+        </div>
+    </div>
+</body>
+
+</html>
