@@ -1,46 +1,47 @@
-import { Formik, Form, FormikHelpers, Field } from 'formik'
-import { MyButton, Popup } from '.'
-import ModalForgetPassword from './modal/ModalForgetPassword'
+import { Formik, Form, FormikHelpers, Field } from "formik";
+import { MyButton, Popup } from ".";
+import ModalForgetPassword from "./modal/ModalForgetPassword";
 
-import { login } from '../../store/actionCreators'
-import { validateEmail, validatePassword } from '../../utils'
+import { login } from "../../store/actionCreators";
+import { validateEmail, validatePassword } from "../../utils";
 
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { useForm } from '../../hooks/useForm'
-import { useSee } from '../../hooks/useSee'
-import { useMessage } from '../../hooks/useMessage'
+import { useNavigate } from "react-router-dom";
+import { memo, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useForm } from "../../hooks/useForm";
+import { useSee } from "../../hooks/useSee";
+import { useMessage } from "../../hooks/useMessage";
 
-import { email, lock, see } from '../../assets'
-import { ReactSVG } from 'react-svg'
+import { email, lock, see } from "../../assets";
+import { ReactSVG } from "react-svg";
+import ModalAccessForgetPassword from "./modal/ModalAccessForgetPassword";
 
 interface Values {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
-const SignupForm = () => {
-
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+const SignupForm = memo(() => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { isSuccess, error, isLoading } = useAppSelector(
     (store) => store.userReducer
-  )
+  );
 
-  const modal = useForm()
-  const seeSecond = useSee(false)
-  const message = useMessage(error)
+  const modalForgetPassword = useForm();
+  const modalAccessForgetPassword = useForm();
+  const seeSecond = useSee(false);
+  const message = useMessage(error);
 
   useEffect(() => {
-    navigate('/booksPage')
-  }, [isSuccess])
+    navigate("/booksPage");
+  }, [isSuccess]);
 
   useEffect(() => {
     if (error) {
-      message.setMessage(error)
+      message.setMessage(error);
     }
-  }, [error])
+  }, [error]);
 
   return (
     <section className="flex h-full w-full flex-col items-center justify-center gap-y-[50px] bg-mooduck-white">
@@ -49,16 +50,16 @@ const SignupForm = () => {
       </h1>
       <Formik
         initialValues={{
-          email: '',
-          password: ''
+          email: "",
+          password: "",
         }}
         onSubmit={(
           values: Values,
           { setSubmitting, resetForm }: FormikHelpers<Values>
         ) => {
-          dispatch(login(values.email, values.password))
-          setSubmitting(false)
-          resetForm()
+          dispatch(login(values.email, values.password));
+          setSubmitting(false);
+          resetForm();
         }}
       >
         {({ errors, touched }) => (
@@ -81,11 +82,11 @@ const SignupForm = () => {
               <Field
                 name="password"
                 placeholder="strongPsW2#"
-                type={seeSecond.visable ? 'text' : 'password'}
+                type={seeSecond.visable ? "text" : "password"}
                 validate={validatePassword}
                 className=" w-full"
               />
-              <ReactSVG 
+              <ReactSVG
                 src={see}
                 className="noselect stroke-mooduck-gray hover:cursor-pointer hover:stroke-mooduck-blue"
                 onClick={seeSecond.handleOnClick}
@@ -97,13 +98,18 @@ const SignupForm = () => {
 
             <p
               className="transition-all ease-in hover:cursor-pointer hover:text-mooduck-blue"
-              onClick={() => modal.handleOnClick(true)}
+              onClick={() => modalForgetPassword.handleOnClick(true)}
             >
               Забыли пароль?
             </p>
             <ModalForgetPassword
-              visable={modal.visable}
-              setVisable={modal.handleOnClick}
+              visable={modalForgetPassword.visable}
+              setVisable={modalForgetPassword.handleOnClick}
+              setVisableAnotherModal={modalAccessForgetPassword.handleOnClick}
+            />
+            <ModalAccessForgetPassword
+              visable={modalAccessForgetPassword.visable}
+              handleOnClick={modalAccessForgetPassword.handleOnClick}
             />
 
             <div className="flex w-full items-center justify-center">
@@ -122,7 +128,7 @@ const SignupForm = () => {
         <Popup handleOnClose={message.setMessage} message={message.message} />
       )}
     </section>
-  )
-}
+  );
+});
 
-export default SignupForm
+export default SignupForm;

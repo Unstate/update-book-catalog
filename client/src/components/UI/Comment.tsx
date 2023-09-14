@@ -1,11 +1,15 @@
 import { FC, memo } from 'react'
 import StarRating from './StarRating/StarRating'
 import { checkExtendOfUser } from '../../utils'
-import { useAddDislikeMutation, useAddLikeMutation, useDeleteDislikeMutation, useDeleteLikeMutation, useGetUserQuery } from '../../services/BookService'
+
+import { useAddDislikeMutation, useAddLikeMutation, useDeleteDislikeMutation, useDeleteLikeMutation } from '../../services/api/comments.api'
+import { useGetUserQuery } from '../../services/api/user.api';
+
 import { like } from '../../assets';
 import { useDate } from '../../hooks/useDate';
 import { IArray } from '../../utils/checkExtendOfUser';
 import { ReactSVG } from 'react-svg';
+
 
 interface CommentProps {
   title: string;

@@ -9,7 +9,7 @@ import { Pagination, Preloader } from '../components/UI'
 import { IBook } from '../models/IBook'
 
 import { useBooks } from '../hooks/useBooks'
-import { useLazyGetSpecifyBooksQuery } from '../services/BookService'
+import { useLazyGetSpecifyBooksQuery } from '../services/api/api'
 import { useEffect } from 'react'
 
 const BooksPage = () => {
@@ -29,7 +29,8 @@ const BooksPage = () => {
     resultAuthors,
     resultGenres,
     genres,
-    setPage
+    setPage,
+    updateResults
   } = useBooks(1, false, '')
 
   useEffect(() => {
@@ -60,6 +61,7 @@ const BooksPage = () => {
             page={page}
             resultGenres={resultGenres}
             resultAuthors={resultAuthors}
+            updateResults={updateResults}
           />
           {results.isLoading && <Preloader></Preloader>}
           {results.isSuccess && (

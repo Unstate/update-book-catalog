@@ -3,14 +3,11 @@ import React from 'react'
 import coverMiddle from '../../assets/coverMiddle.svg'
 import { Link } from 'react-router-dom'
 import { correctViewOfAuthors } from '../../utils'
-import {
-  useAddBookToFavoriteMutation,
-  useDeleteBookFromFavoriteMutation,
-  useGetUserFavoriteBooksQuery
-} from '../../services/BookService'
+
 import { useAppSelector } from '../../hooks/redux'
 import { checkExtendOfBook } from '../../utils/checkExtendOfBook'
 import { MyButton } from '../UI'
+import { useAddBookToFavoriteMutation, useDeleteBookFromFavoriteMutation, useGetUserFavoriteBooksQuery } from '../../services/api/user.api'
 
 export interface BookElementProps {
   author: string[]

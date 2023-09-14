@@ -3,14 +3,11 @@ import React from 'react'
 import coverMiddle from '../../assets/coverMiddle.svg'
 import { Link } from 'react-router-dom'
 import { correctViewOfAuthors } from '../../utils'
-import {
-  useAddBookToFavoriteMutation,
-  useDeleteBookFromFavoriteMutation,
-  useGetUserFavoriteBooksQuery
-} from '../../services/BookService'
+
 import { useAppSelector } from '../../hooks/redux'
 import { checkExtendOfBook } from '../../utils/checkExtendOfBook'
 import { MyButton } from '../UI'
+import { useAddBookToFavoriteMutation, useDeleteBookFromFavoriteMutation, useGetUserFavoriteBooksQuery } from '../../services/api/user.api'
 
 export interface BookElementProps {
   author: string[]
@@ -29,7 +26,7 @@ const BookElementTiles: React.FC<BookElementProps> = ({
     useAddBookToFavoriteMutation()
   const [deleteBookFromFavorite] = useDeleteBookFromFavoriteMutation()
   const { user } = useAppSelector((store) => store.userReducer)
-  const { data } = useGetUserFavoriteBooksQuery({ id: user?.id, limit: 10000 })
+  const { data } = useGetUserFavoriteBooksQuery({ id: user?.id, limit: 10000, page: 1 })
 
   return (
     <div className="flex w-[200px] flex-col gap-y-5">

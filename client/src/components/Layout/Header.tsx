@@ -1,45 +1,55 @@
-import { useAppSelector } from '../../hooks/redux'
-import { useInput } from '../../hooks/useInput'
-import { checkExtendOfBook } from '../../utils/checkExtendOfBook'
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useInput } from "../../hooks/useInput";
+import { checkExtendOfBook } from "../../utils/checkExtendOfBook";
 
+import LogoAndNameOfCompany from "./LogoAndNameOfCompany";
+import { Link } from "react-router-dom";
+
+import { bookMark, search, unknownAvatar } from "../../assets";
+import coverMiddle from "../../assets/coverMiddle.svg";
+
+import { IBook } from "../../models/IBook";
+import { useForm } from "../../hooks/useForm";
+import ModalHeaderSearch from "../UI/modal/ModalHeaderSearch";
+import { ReactSVG } from "react-svg";
+import { useLazyGetBooksByTextQuery } from "../../services/api/api";
 import {
   useAddBookToFavoriteMutation,
   useDeleteBookFromFavoriteMutation,
   useGetUserFavoriteBooksQuery,
-  useLazyGetBooksByTextQuery
-} from '../../services/BookService'
-
-import LogoAndNameOfCompany from './LogoAndNameOfCompany'
-import { Link } from 'react-router-dom'
-
-import { bookMark, search, unknownAvatar } from '../../assets'
-import coverMiddle from '../../assets/coverMiddle.svg'
-
-import { IBook } from '../../models/IBook'
-import { useForm } from '../../hooks/useForm'
-import ModalHeaderSearch from '../UI/modal/ModalHeaderSearch'
-import { ReactSVG } from 'react-svg'
+} from "../../services/api/user.api";
+import { useEffect } from "react";
+import { getUserImage } from "../../store/actionCreators";
 
 const Header = () => {
-  const { user } = useAppSelector((store) => store.userReducer)
-  const { bind, reset, value } = useInput('')
-  const modal = useForm()
+  const { user } = useAppSelector((store) => store.userReducer);
+  const { logo } = useAppSelector((store) => store.userReducer);
+  const { bind, reset, value } = useInput("");
+  const modal = useForm();
+  const dispatch = useAppDispatch()
 
   const [getBooksByText, { data: books, isSuccess: booksIsSuccess }] =
-    useLazyGetBooksByTextQuery()
+    useLazyGetBooksByTextQuery();
   const { data: userData } = useGetUserFavoriteBooksQuery({
     id: user?.id,
-    limit: 1000
-  })
-  const [addBookToFavorite] = useAddBookToFavoriteMutation()
-  const [deleteBookFromFavorite] = useDeleteBookFromFavoriteMutation()
-  const isMobile = window.innerWidth <= 1023
+    limit: 1000,
+    page: 1,
+  });
+  const [addBookToFavorite] = useAddBookToFavoriteMutation();
+  const [deleteBookFromFavorite] = useDeleteBookFromFavoriteMutation();
+  const isMobile = window.innerWidth <= 1023;
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      getBooksByText(value)
+    if (event.key === "Enter") {
+      getBooksByText(value);
     }
-  }
+  };
+
+  useEffect(() => {
+    if (user?.id) {
+      dispatch(getUserImage(user?.id))
+    }
+  }, [])
 
   return (
     <>
@@ -51,7 +61,15 @@ const Header = () => {
           <div className=" flex items-center justify-between">
             <LogoAndNameOfCompany className="text-mooduck-black hover:cursor-pointer" />
             <Link to={`/user/${user.id}`}>
-              <ReactSVG src={unknownAvatar} className="h-[40px] w-[40px] hover:cursor-pointer" />
+              <img
+                className="h-[40px] w-[40px] rounded-full"
+                src={logo}
+                alt="Картинка не прогрузилась"
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null;
+                  currentTarget.src = unknownAvatar;
+                }}
+              />
             </Link>
           </div>
           <div className="flex w-full items-center rounded-[2px] border-[1px] border-mooduck-gray p-3">
@@ -67,9 +85,9 @@ const Header = () => {
               src={search}
               className="h-[16px] w-[16px] hover:cursor-pointer"
               onClick={() => {
-                getBooksByText(value)
+                getBooksByText(value);
                 {
-                  booksIsSuccess && modal.handleOnClick(true)
+                  booksIsSuccess && modal.handleOnClick(true);
                 }
               }}
             />
@@ -95,7 +113,7 @@ const Header = () => {
           className="relative w-full flex-col gap-y-[30px] px-[42px] pt-[21px]"
         >
           <div className="mb-[30px] flex items-center justify-between">
-            <Link to={'/booksPage'}>
+            <Link to={"/booksPage"}>
               <LogoAndNameOfCompany className="text-mooduck-black hover:cursor-pointer" />
             </Link>
             <div className="flex items-center gap-x-[23px]">
@@ -111,17 +129,26 @@ const Header = () => {
                   src={search}
                   className="h-[16px] w-[16px] hover:cursor-pointer"
                   onClick={() => {
-                    getBooksByText(value)
+                    getBooksByText(value);
                   }}
                 />
               </div>
               <Link to={`/user/${user.id}`}>
-                <ReactSVG src={unknownAvatar} className="h-[40px] w-[40px] hover:cursor-pointer" />
+                {/* <ReactSVG src={unknownAvatar} className="h-[40px] w-[40px] hover:cursor-pointer" /> */}
+                <img
+                  className="h-[40px] w-[40px] rounded-full"
+                  src={logo}
+                  alt="Картинка не прогрузилась"
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = unknownAvatar;
+                  }}
+                />
               </Link>
             </div>
             <div
               className={`absolute right-[102px] top-[90px] flex h-[318px] w-[563px] flex-col gap-y-5 overflow-auto bg-mooduck-white px-[18px] py-[10px] shadow-lg shadow-mooduck-black ${
-                books && value ? 'block' : 'hidden'
+                books && value ? "block" : "hidden"
               }`}
             >
               <p className="font-semibold uppercase">Результаты поиска</p>
@@ -138,8 +165,8 @@ const Header = () => {
                           src={book.img.smallFingernail}
                           alt="Картинка не прогрузилась"
                           onError={({ currentTarget }) => {
-                            currentTarget.onerror = null
-                            currentTarget.src = coverMiddle
+                            currentTarget.onerror = null;
+                            currentTarget.src = coverMiddle;
                           }}
                         />
                       </Link>
@@ -160,17 +187,17 @@ const Header = () => {
                         checkExtendOfBook(userData?.books, book._id)
                           ? deleteBookFromFavorite({
                               userId: user?.id,
-                              bookId: book._id
+                              bookId: book._id,
                             })
                           : addBookToFavorite({
                               userId: user?.id,
-                              bookId: book._id
-                            })
+                              bookId: book._id,
+                            });
                       }}
                       className={`hover:cursor-pointer ${
                         checkExtendOfBook(userData?.books, book._id)
-                          ? 'fill-mooduck-blue hover:fill-mooduck-black'
-                          : 'fill-mooduck-black hover:fill-mooduck-blue'
+                          ? "fill-mooduck-blue hover:fill-mooduck-black"
+                          : "fill-mooduck-black hover:fill-mooduck-blue"
                       } `}
                     />
                   </div>
@@ -182,7 +209,7 @@ const Header = () => {
         </header>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

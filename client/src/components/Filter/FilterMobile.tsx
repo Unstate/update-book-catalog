@@ -19,6 +19,7 @@ interface FilterMobileProps {
   page: number
   resultAuthors: string[]
   resultGenres: string[]
+  updateResults: () => void
 }
 
 const FilterMobile: FC<FilterMobileProps> = ({
@@ -34,7 +35,8 @@ const FilterMobile: FC<FilterMobileProps> = ({
   test,
   page,
   resultAuthors,
-  resultGenres
+  resultGenres,
+  updateResults
 }) => {
   const [visable, setVisable] = useState<boolean>(false)
 
@@ -111,6 +113,7 @@ const FilterMobile: FC<FilterMobileProps> = ({
                   : undefined
               })
               setVisable(false)
+              updateResults()
             }}
           >
             применить фильтры

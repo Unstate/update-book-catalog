@@ -5,7 +5,7 @@ import { validatePassword } from '../../../utils'
 import { useSee } from '../../../hooks/useSee'
 import { see, lock } from '../../../assets'
 import MyButton from '../MyButton'
-import { useChangeUserPasswordMutation } from '../../../services/BookService'
+import { useChangeUserPasswordMutation } from '../../../services/api/user.api'
 import { useParams } from 'react-router-dom'
 import { ReactSVG } from 'react-svg'
 

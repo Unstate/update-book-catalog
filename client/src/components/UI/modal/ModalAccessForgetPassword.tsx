@@ -5,7 +5,7 @@ import { validatePassword } from '../../../utils'
 import { useSee } from '../../../hooks/useSee'
 import { see, lock, code } from '../../../assets'
 import MyButton from '../MyButton'
-import { useChangeResetPasswordMutation } from '../../../services/BookService'
+import { useChangeResetPasswordMutation } from '../../../services/api/user.api'
 import { ReactSVG } from 'react-svg'
 
 interface ModalAccessForgetPasswordProps {

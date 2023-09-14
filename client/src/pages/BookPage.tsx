@@ -2,12 +2,11 @@ import { Line, MyButton, Preloader } from '../components/UI'
 import { BookBigInfo, BookSmallInfo, Comments, Layout } from '../components'
 import ModalComment from '../components/UI/modal/ModalComment'
 
-import { useGetCertainBookCommentsQuery, useGetCertainBookQuery } from '../services/BookService'
-
 import { useParams } from 'react-router-dom'
 import { useForm } from '../hooks/useForm'
 
-
+import { useGetCertainBookQuery } from '../services/api/api'
+import { useGetCertainBookCommentsQuery } from '../services/api/comments.api'
 
 const BookPage = () => {
 
@@ -16,9 +15,11 @@ const BookPage = () => {
 
   const { isLoading, data, } =
     useGetCertainBookQuery(id)
+
+  //FIXME: If it does not work change id ? id : '' to id and add string | undefing in query
   const {
     data: comments,
-  } = useGetCertainBookCommentsQuery(id)
+  } = useGetCertainBookCommentsQuery(id ? id : '')
   
 
   return (

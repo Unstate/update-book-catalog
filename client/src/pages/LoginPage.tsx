@@ -1,8 +1,9 @@
+import { memo } from 'react'
 import { LogoAndNameOfCompany } from '../components'
 import { MyButton, SignupForm } from '../components/UI'
 import { Link } from 'react-router-dom'
 
-const LoginPage = () => {
+const LoginPage = memo(() => {
   const isMobile = window.innerWidth <= 1023
   return (
     <>
@@ -45,6 +46,6 @@ const LoginPage = () => {
       )}
     </>
   )
-}
+})
 
 export default LoginPage

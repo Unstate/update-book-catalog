@@ -1,17 +1,13 @@
 import { BookElementTiles, Comments, Layout } from '../components'
 
-import {
-  useGetUserCommentsQuery,
-  useGetUserFavoriteBooksQuery,
-  useGetUserQuery
-} from '../services/BookService'
-
 import { useParams } from 'react-router-dom'
 
 import { IBook } from '../models/IBook'
 
 import UserSettings from '../components/UserComponents/UserSettings'
 import { useVisable } from '../hooks/useVisable'
+
+import { useGetUserCommentsQuery, useGetUserFavoriteBooksQuery, useGetUserQuery } from '../services/api/user.api'
 
 const UserPage = () => {
   const { id } = useParams()
@@ -22,7 +18,8 @@ const UserPage = () => {
 
   const { data: userFavoriteBooks } = useGetUserFavoriteBooksQuery({
     id: id,
-    limit: 10000
+    limit: 10000,
+    page: 1
   })
 
   const { data: userComments } = useGetUserCommentsQuery(id)

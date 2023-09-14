@@ -16,7 +16,6 @@ import { ReactSVG } from "react-svg";
 interface ModalUploaderProps {
   visable: boolean;
   handleOnClick: (visable: boolean) => void;
-  // id: string
 }
 
 const ModalUploader: FC<ModalUploaderProps> = ({ visable, handleOnClick }) => {
@@ -30,9 +29,7 @@ const ModalUploader: FC<ModalUploaderProps> = ({ visable, handleOnClick }) => {
     inputRef,
   } = useUploadImage(null);
 
-  // const dispatch = useAppDispatch()
   const { id } = useParams();
-  // useEffect(()=>{console.log(files)},[files])
 
   return (
     <Modal

@@ -13,11 +13,15 @@ export const useBooks = (
   const [page, setPage] = useState<number>(initialPage)
   const [list, setList] = useState<boolean>(initialList)
   const value = useInput(initialValue)
+
+  const sortObjectsAlphabetically = (objects: IAuthorsAndGenres[]): IAuthorsAndGenres[] => {
+    return objects.sort((a, b) => a.author.localeCompare(b.author));
+  }
   const [authors, setAuthors] = useState<IAuthorsAndGenres[]>(
-    getUniqueObjects(AUTHORS)
+    sortObjectsAlphabetically(getUniqueObjects(AUTHORS))
   )
   const [genres, setGenres] = useState<IAuthorsAndGenres[]>(
-    getUniqueObjects(GENRES)
+    sortObjectsAlphabetically(getUniqueObjects(GENRES))
   )
   let resultAuthors: string[] = []
   let resultGenres: string[] = []
@@ -86,6 +90,11 @@ export const useBooks = (
       .map((el) => pushToGenres(el.author))
   }
 
+  const updateResults = () => {
+    setAuthors(sortObjectsAlphabetically(getUniqueObjects(AUTHORS)))
+    setGenres(sortObjectsAlphabetically(getUniqueObjects(GENRES)))
+  }
+
   return {
     page,
     list,
@@ -99,6 +108,7 @@ export const useBooks = (
     resultAuthors,
     resultGenres,
     genres,
-    setPage
+    setPage,
+    updateResults
   }
 }

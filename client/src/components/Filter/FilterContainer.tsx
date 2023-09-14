@@ -17,6 +17,7 @@ interface FilterContainerProps {
   page: number
   resultAuthors: string[]
   resultGenres: string[]
+  updateResults: () => void
 }
 
 const FilterContainer: FC<FilterContainerProps> = ({
@@ -32,7 +33,8 @@ const FilterContainer: FC<FilterContainerProps> = ({
   test,
   page,
   resultAuthors,
-  resultGenres
+  resultGenres,
+  updateResults
 }) => {
   return (
     <>
@@ -50,6 +52,7 @@ const FilterContainer: FC<FilterContainerProps> = ({
         page={page}
         resultGenres={resultGenres}
         resultAuthors={resultAuthors}
+        updateResults={updateResults}
       />
       <FilterMobile
         genres={genres}
@@ -65,6 +68,7 @@ const FilterContainer: FC<FilterContainerProps> = ({
         page={page}
         resultGenres={resultGenres}
         resultAuthors={resultAuthors}
+        updateResults={updateResults}
       />
     </>
   )

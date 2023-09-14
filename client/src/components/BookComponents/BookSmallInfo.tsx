@@ -1,15 +1,31 @@
-import  coverIsMissing  from '../../assets/coverIsMissing.svg'
-import { Link } from 'react-scroll'
-import { correctViewOfAuthors } from '../../utils'
-import { FC } from 'react'
-import { CertainBook } from '../../models/ICertainBook'
-import { MyButton } from '../UI'
+import coverIsMissing from "../../assets/coverIsMissing.svg";
+import { Link } from "react-scroll";
+import { correctViewOfAuthors } from "../../utils";
+import { FC } from "react";
+import { CertainBook } from "../../models/ICertainBook";
+import { MyButton } from "../UI";
+import {
+  useAddBookToFavoriteMutation,
+  useDeleteBookFromFavoriteMutation,
+  useGetUserFavoriteBooksQuery,
+} from "../../services/api/user.api";
+import { useAppSelector } from "../../hooks/redux";
+import { checkExtendOfBook } from "../../utils/checkExtendOfBook";
 
 export interface BookSmallInfoProps {
-    book: CertainBook
+  book: CertainBook;
 }
 
-const BookSmallInfo:FC<BookSmallInfoProps> = ({book}) => {
+const BookSmallInfo: FC<BookSmallInfoProps> = ({ book }) => {
+  const [addBookToFavorite] = useAddBookToFavoriteMutation();
+  const [deleteBookFromFavorite] = useDeleteBookFromFavoriteMutation();
+  const { user } = useAppSelector((store) => store.userReducer);
+  const { data } = useGetUserFavoriteBooksQuery({
+    id: user?.id,
+    limit: 1000,
+    page: 1,
+  });
+
   return (
     <section className="flex w-full gap-x-[59px] py-[30px]">
       <img
@@ -17,8 +33,8 @@ const BookSmallInfo:FC<BookSmallInfoProps> = ({book}) => {
         src={book.img.largeFingernail}
         alt="Картинка не прогрузилась"
         onError={({ currentTarget }) => {
-          currentTarget.onerror = null
-          currentTarget.src = coverIsMissing
+          currentTarget.onerror = null;
+          currentTarget.src = coverIsMissing;
         }}
       />
       <div className="flex flex-col gap-y-[50px]">
@@ -91,10 +107,30 @@ const BookSmallInfo:FC<BookSmallInfoProps> = ({book}) => {
             </Link>
           </div>
         </div>
-        <MyButton className="w-[540px] py-[15px]">Хочу почитать</MyButton>
+        <MyButton
+        className={`w-[540px] py-[15px] ${
+          checkExtendOfBook(data?.books, book._id) &&
+          'bg-mooduck-black text-mooduck-white hover:bg-mooduck-white hover:text-mooduck-black'
+        }`}
+        onClick={() =>
+          checkExtendOfBook(data?.books, book._id)
+            ? deleteBookFromFavorite({
+                userId: user?.id,
+                bookId: book._id
+              })
+            : addBookToFavorite({
+                userId: user?.id,
+                bookId: book._id
+              })
+        }
+      >
+        {checkExtendOfBook(data?.books, book._id)
+          ? 'не хочу читать'
+          : 'хочу почитать'}
+      </MyButton>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default BookSmallInfo
+export default BookSmallInfo;

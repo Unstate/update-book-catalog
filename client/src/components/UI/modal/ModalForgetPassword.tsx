@@ -1,32 +1,26 @@
-import { FC, useEffect } from 'react'
-import Modal from '../Modal'
-import MyButton from '../MyButton'
-import { useResetPasswordMutation } from '../../../services/BookService'
-import ModalAccessForgetPassword from './ModalAccessForgetPassword'
-import { useInput } from '../../../hooks/useInput'
-import { useForm } from '../../../hooks/useForm'
+import { FC, memo } from "react";
+import Modal from "../Modal";
+import MyButton from "../MyButton";
+import { useResetPasswordMutation } from '../../../services/api/user.api'
+import { useInput } from "../../../hooks/useInput";
 
 interface ModalForgetPassword {
-  visable: boolean
-  setVisable: (visable: boolean) => void
+  visable: boolean;
+  setVisable: (visable: boolean) => void;
+  setVisableAnotherModal: (visable: boolean) => void;
 }
 
-const ModalForgetPassword: FC<ModalForgetPassword> = ({
+const ModalForgetPassword: FC<ModalForgetPassword> = memo(({
   visable,
-  setVisable
+  setVisable,
+  setVisableAnotherModal
 }) => {
-  const modal = useForm()
-  const { bind, value } = useInput('')
-  const [resetPassword, { isSuccess }] = useResetPasswordMutation()
+  const { bind, value } = useInput("");
+  const [resetPassword] = useResetPasswordMutation();
 
-  useEffect(() => {
-    if (isSuccess) {
-      modal.handleOnClick(true)
-    }
-  }, [isSuccess])
 
   return (
-    <Modal visable={visable} setVisable={setVisable} title={'Забыли пароль?'}>
+    <Modal visable={visable} setVisable={setVisable} title={"Забыли пароль?"}>
       <p className="text-mooduck-gray ">
         Введите ваш E-mail, мы отправим письмо с кодом восстановления пароля
       </p>
@@ -36,15 +30,17 @@ const ModalForgetPassword: FC<ModalForgetPassword> = ({
         className="w-full rounded-[2px] border-[1px] border-mooduck-gray px-3 py-[15px]"
         placeholder="Введите ваш E-mail"
       />
-      <MyButton className="py-[15px]" onClick={() => resetPassword(value)}>
+      <MyButton 
+        className="py-[15px]" 
+        onClick={() => {
+          resetPassword(value)
+          setVisable(false)
+          setVisableAnotherModal(true)
+        }}>
         Отправить
       </MyButton>
-      <ModalAccessForgetPassword
-        visable={modal.visable}
-        handleOnClick={modal.handleOnClick}
-      />
     </Modal>
-  )
-}
+  );
+});
 
-export default ModalForgetPassword
+export default ModalForgetPassword;

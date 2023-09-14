@@ -19,6 +19,7 @@ interface FilterProps {
   page: number
   resultAuthors: string[]
   resultGenres: string[]
+  updateResults: () => void
 }
 
 const Filter: FC<FilterProps> = ({
@@ -33,13 +34,14 @@ const Filter: FC<FilterProps> = ({
   test,
   page,
   resultAuthors,
-  resultGenres
+  resultGenres,
+  updateResults
 }) => {
   return (
     <>
-      <section className="hidden h-[800px]  border-[2px] border-mooduck-black p-[30px] xl:flex xl:w-[380px] xl:flex-col xl:gap-y-5 2xl:flex 2xl:w-[525px] 2xl:flex-col 2xl:gap-y-5">
+      <section className="h-[800px] border-[2px] border-mooduck-black p-[30px] xl:flex xl:w-[380px] xl:flex-col xl:gap-y-4 2xl:flex 2xl:w-[525px] 2xl:flex-col 2xl:gap-y-4">
         <p className="text-base font-semibold uppercase">категории</p>
-        <div className="h-[1px] w-full bg-mooduck-black" />
+        <div className="h-[1px] w-full bg-mooduck-black"></div>
         <div className="flex flex-col gap-y-[10px]">
           <p className="text-base font-semibold uppercase">все книги</p>
           <div className="flex h-[245px] flex-col gap-y-[10px] overflow-auto ">
@@ -90,6 +92,7 @@ const Filter: FC<FilterProps> = ({
                   ? resultAuthors?.join('-')
                   : undefined
               })
+              updateResults()
             }}
           >
             применить фильтры

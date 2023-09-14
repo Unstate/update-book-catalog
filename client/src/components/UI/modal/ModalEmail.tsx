@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useChangeUserEmailMutation } from '../../../services/BookService'
+import { useChangeUserEmailMutation } from '../../../services/api/user.api'
 
 import { useParams } from 'react-router-dom'
 import { useInput } from '../../../hooks/useInput'

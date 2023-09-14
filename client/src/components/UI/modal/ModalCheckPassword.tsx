@@ -4,7 +4,7 @@ import { Modal, MyButton } from '..'
 
 import { useInput } from '../../../hooks/useInput'
 import { useParams } from 'react-router-dom'
-import { useCheckUserPasswordMutation } from '../../../services/BookService'
+import { useCheckUserPasswordMutation } from '../../../services/api/user.api'
 import ModalNewPassword from './ModalNewPassword'
 import { useForm } from '../../../hooks/useForm'
 

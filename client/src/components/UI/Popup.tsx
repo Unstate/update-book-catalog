@@ -10,6 +10,9 @@ interface PopupInterface {
 }
 
 const Popup: React.FC<PopupInterface> = ({ message, handleOnClose }) => {
+  
+  console.log('asdas')
+
   const dispatch = useAppDispatch()
 
   const HIDE_TIMEOUT = 5000
