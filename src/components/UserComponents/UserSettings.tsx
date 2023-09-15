@@ -58,7 +58,7 @@ const UserSettings: FC<UserSettingsProps> = ({ user }) => {
               <p className="w-[182px] text-xl font-normal text-[#FFFFFF80]">
                 E-mail
               </p>
-              <p className="w-[164px] text-xl text-mooduck-white">
+              <p className="w-[164px] overflow-auto text-xl text-mooduck-white">
                 {user.email}
               </p>
             </div>
