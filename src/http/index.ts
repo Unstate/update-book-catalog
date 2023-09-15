@@ -1,9 +1,9 @@
 import { AuthResponse } from "../models/response/AuthResponse";
 import axios from "axios";
 
-export const BASE_URL = "http://localhost:3000/api";
-export const BASE_URL_AUTH = "http://localhost:3000/api/auth";
-export const BASE_URL_USER = "http://localhost:3000/api/users";
+export const BASE_URL = "https://mooduck-service-api.onrender.com/api";
+export const BASE_URL_AUTH = "https://mooduck-service-api.onrender.com/api/auth";
+export const BASE_URL_USER = "https://mooduck-service-api.onrender.com/api/users";
 
 export const $api = axios.create({
   withCredentials: true,
